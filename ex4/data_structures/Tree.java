@@ -4,6 +4,10 @@ public class Tree {
 
     /** The root node of a tree */
     TreeNode root;
+    /** Used in addHelper method to change its behavior to the left part of the tree */
+    private static final boolean LEFT = false;
+    /** Used in addHelper method to change its behavior to the right part of the tree */
+    private static final boolean RIGHT = true;
 
     /** Represents a single node of a tree */
     private class TreeNode {
@@ -29,7 +33,45 @@ public class Tree {
 
     /** @return the height of the tree */
     private int height() { return root.height; }
-    
+
+    /**
+     * Add a new node with key newValue into the tree
+     * @param newValue new value to add to the tree
+     * @return false iff newValue already exists in the tree
+     */
+    public boolean add(int newValue) {
+        return addHelper(root, root, RIGHT, newValue);
+    }
+
+    private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
+        if (current == null) {
+            if (parent == null) {
+                this.root = new TreeNode(newValue);
+                return true;
+            }
+            if (right) { parent.right = new TreeNode(newValue); }
+            else { parent.left = new TreeNode(newValue); }
+            return true;
+        }
+        if (newValue == current.value) { return false; }
+        else if (newValue < current.value) {
+            if (addHelper(current.left, current, LEFT, newValue)) {
+                // TODO: CAN IT BE LESS??
+                if (current.height <= current.left.height) { current.height++; }
+                return true;
+            }
+            return false;
+        }
+        else {
+            if (addHelper(current.right, current, RIGHT, newValue)) {
+                // TODO: CAN IT BE LESS??
+                if (current.height <= current.right.height) { current.height++; }
+                return true;
+            }
+            return false;
+        }
+    }
+
     /** A default constructor */
     public Tree() { this.root = null; }
 
@@ -41,7 +83,7 @@ public class Tree {
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
     private int[] toArray() {
-        int[] result = new int[(int)Math.pow(2, height())];
+        int[] result = new int[(int)Math.pow(2, height() + 1) - 1];
 
         traverseToArray(1, result, root);
 
@@ -56,6 +98,8 @@ public class Tree {
     }
 
     public String toString() {
+        if (root == null) return "";
+
         int[] arrayTree = toArray();
         String result = "";
         int spaceNumber = height();
@@ -72,7 +116,10 @@ public class Tree {
                 spaceNumber--;
                 currentHeightString = currentSpaces;
             }
-            currentHeightString += arrayTree[i] + " ";
+            String element;
+            if (arrayTree[i] == 0) { element = " "; }
+            else { element = Integer.toString(arrayTree[i]); }
+            currentHeightString += element + " ";
         }
         result += currentHeightString.substring(0, currentHeightString.length() - 1);
 
@@ -85,5 +132,10 @@ public class Tree {
         return result;
     }
 
-    private boolean isPowerOfTwo(int i) { return i == 1 || i % 2 == 0; }
+    public boolean isPowerOfTwoWrapper(int i) { return isPowerOfTwo(i); }
+    private boolean isPowerOfTwo(int i) {
+        if (i == 1) return true;
+        if (i % 2 == 0) return isPowerOfTwo(i / 2);
+        return false;
+    }
 }
