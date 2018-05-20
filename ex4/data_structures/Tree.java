@@ -12,10 +12,12 @@ public class Tree {
     /** Represents a single node of a tree */
     private class TreeNode {
 
-        /** The left child of a tree */
+        /** The left child of a node */
         private TreeNode left;
-        /** The right child of a tree */
+        /** The right child of a node */
         private TreeNode right;
+        /** The parent of a node */
+        private TreeNode parent;
         /** The value that this node stores */
         private int value;
         /** The height of this node */
@@ -29,6 +31,21 @@ public class Tree {
 
         /** Constructs a TreeNode with the default value of 0 */
         private TreeNode() { this(0); }
+
+        /** Constructs a TreeNode given its integer value and its parent node */
+        private TreeNode(int value, TreeNode parent) {
+            this(value);
+            this.parent = parent;
+        }
+
+        /** Constructs a TreeNode given its integer value, its parent node,
+         * and a switch that represents whether the new node is a right or a left child */
+        private TreeNode(int value, TreeNode parent, boolean right) {
+            this(value, parent);
+            if (parent == null) return;
+            if (right) { parent.right = this; }
+            else { parent.left = this; }
+        }
     }
 
     /** @return the height of the tree */
@@ -49,8 +66,7 @@ public class Tree {
                 this.root = new TreeNode(newValue);
                 return true;
             }
-            if (right) { parent.right = new TreeNode(newValue); }
-            else { parent.left = new TreeNode(newValue); }
+            new TreeNode(newValue, parent, right);
             return true;
         }
         if (newValue == current.value) { return false; }
