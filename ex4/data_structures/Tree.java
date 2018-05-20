@@ -12,10 +12,12 @@ public class Tree {
     /** Represents a single node of a tree */
     private class TreeNode {
 
-        /** The left child of a tree */
+        /** The left child of a node */
         private TreeNode left;
-        /** The right child of a tree */
+        /** The right child of a node */
         private TreeNode right;
+        /** The parent of a node */
+        private TreeNode parent;
         /** The value that this node stores */
         private int value;
         /** The height of this node */
