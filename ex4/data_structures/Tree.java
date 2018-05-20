@@ -66,8 +66,7 @@ public class Tree {
                 this.root = new TreeNode(newValue);
                 return true;
             }
-            if (right) { parent.right = new TreeNode(newValue); }
-            else { parent.left = new TreeNode(newValue); }
+            new TreeNode(newValue, parent, right);
             return true;
         }
         if (newValue == current.value) { return false; }
