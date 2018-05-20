@@ -2,12 +2,15 @@ package oop.ex4.data_structures;
 
 public class Tree {
 
-    /** The root node of a tree */
-    TreeNode root;
     /** Used in addHelper method to change its behavior to the left part of the tree */
     private static final boolean LEFT = false;
     /** Used in addHelper method to change its behavior to the right part of the tree */
     private static final boolean RIGHT = true;
+
+    /** The root node of a tree */
+    TreeNode root;
+    /** Represents number of nodes in the tree */
+    private int size;
 
     /** Represents a single node of a tree */
     private class TreeNode {
@@ -48,6 +51,14 @@ public class Tree {
         }
     }
 
+    /** Wraps creating a new node with incrementing size */
+    private TreeNode getNewTreeNode(int newValue, TreeNode parent, boolean right) {
+        size++;
+        return new TreeNode(newValue, parent, right);
+    }
+
+    private TreeNode getNewTreeNode(int newValue) { return getNewTreeNode(newValue, null, RIGHT); }
+
     /** @return the height of the tree */
     private int height() { return root.height; }
 
@@ -59,14 +70,14 @@ public class Tree {
     public boolean add(int newValue) {
         return addHelper(root, root, RIGHT, newValue);
     }
-
+    
     private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
-                this.root = new TreeNode(newValue);
+                this.root = getNewTreeNode(newValue);
                 return true;
             }
-            new TreeNode(newValue, parent, right);
+            getNewTreeNode(newValue, parent, right);
             return true;
         }
         if (newValue == current.value) { return false; }
@@ -88,13 +99,16 @@ public class Tree {
         }
     }
 
+    /** @return number of nodes in the tree */
+    public int size() { return size; }
+
     /** A default constructor */
     public Tree() { this.root = null; }
 
     /** A constructor that builds the tree by adding the elements in the input array one-by-one.
      * If the same values appears twice (or more) in the list, it is ignored. */
     public Tree(int[] data) {
-        this.root = new TreeNode(data[0]);
+        root = getNewTreeNode(data[0]);
     }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
@@ -138,6 +152,7 @@ public class Tree {
             currentHeightString += element + " ";
         }
         result += currentHeightString.substring(0, currentHeightString.length() - 1);
+        result += "\nsize: " + size();
 
         return result;
     }
