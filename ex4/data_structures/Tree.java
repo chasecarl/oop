@@ -51,6 +51,7 @@ public class Tree {
         }
     }
 
+    /** Wraps creating a new node with incrementing size */
     private TreeNode getNewTreeNode(int newValue, TreeNode parent, boolean right) {
         size++;
         return new TreeNode(newValue, parent, right);
@@ -69,7 +70,7 @@ public class Tree {
     public boolean add(int newValue) {
         return addHelper(root, root, RIGHT, newValue);
     }
-
+    
     private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
