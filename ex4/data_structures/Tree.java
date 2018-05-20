@@ -31,6 +31,21 @@ public class Tree {
 
         /** Constructs a TreeNode with the default value of 0 */
         private TreeNode() { this(0); }
+
+        /** Constructs a TreeNode given its integer value and its parent node */
+        private TreeNode(int value, TreeNode parent) {
+            this(value);
+            this.parent = parent;
+        }
+
+        /** Constructs a TreeNode given its integer value, its parent node,
+         * and a switch that represents whether the new node is a right or a left child */
+        private TreeNode(int value, TreeNode parent, boolean right) {
+            this(value, parent);
+            if (parent == null) return;
+            if (right) { parent.right = this; }
+            else { parent.left = this; }
+        }
     }
 
     /** @return the height of the tree */
