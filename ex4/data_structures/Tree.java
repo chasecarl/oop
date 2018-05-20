@@ -171,4 +171,86 @@ public class Tree {
         if (i % 2 == 0) return isPowerOfTwo(i / 2);
         return false;
     }
+
+    /**
+     * Does tree contain a given input value.
+     * @param searchVal value to search for
+     * @return if val is found in the tree, return the depth of its node (where 0 is the root).
+     * Otherwise -- return -1.
+     */
+    public int contains(int searchVal){
+        TreeNode node = searching(this.root, searchVal);
+        if (node != null){
+            return node.height;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    /*
+    Recursive helper for searching a value in the tree.
+     */
+    private TreeNode searching (TreeNode currentNode, int searchVal){
+        if (currentNode == null){
+            return null;
+        }
+        if (searchVal == currentNode.value){
+            return currentNode;
+        }
+        if (searchVal > currentNode.value){
+            return searching(currentNode.right, searchVal);
+        } else {
+            return searching(currentNode.left, searchVal);
+        }
+    }
+
+    /**
+     * Remove a node from the tree, if it exists.
+     * @param toDelete value to delete
+     * @return true iff toDelete found and deleted
+     */
+    public boolean delete(int toDelete){
+        TreeNode node = searching(this.root, toDelete);
+        if (node.value != -1){
+            deleteHelper(toDelete, root);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
+        if (currentNode == null) {
+            return currentNode;
+        }
+        if (currentNode.value > toDelete) {
+            currentNode.left = deleteHelper(toDelete, currentNode.left);
+        } else {
+            if (currentNode.value < toDelete) {
+                currentNode.right = deleteHelper(toDelete, currentNode.right);
+            } else {
+                if (currentNode.right != null && currentNode.left != null) {
+                    currentNode.value = minNode(currentNode.right).value;
+                    currentNode.right = deleteHelper(currentNode.value, currentNode.right);
+                } else {
+                    if (currentNode.left != null) {
+                        currentNode = currentNode.left;
+                    } else {
+                        currentNode = currentNode.right;
+                    }
+                }
+            }
+        }
+        return currentNode;
+    }
+
+
+    private TreeNode minNode(TreeNode root){
+        if (root.right == null){
+            return root;
+        } else {
+            return minNode(root.left);
+        }
+    }
 }
