@@ -181,7 +181,7 @@ public class Tree {
     public int contains(int searchVal){
         TreeNode node = searching(this.root, searchVal);
         if (node != null){
-            return node.height;
+            return this.height() - node.height;
         }
         else {
             return -1;
@@ -212,8 +212,9 @@ public class Tree {
      */
     public boolean delete(int toDelete){
         TreeNode node = searching(this.root, toDelete);
-        if (node.value != -1){
+        if (node != null){
             deleteHelper(toDelete, root);
+            size--;
             return true;
         } else {
             return false;
@@ -231,12 +232,15 @@ public class Tree {
                 currentNode.right = deleteHelper(toDelete, currentNode.right);
             } else {
                 if (currentNode.right != null && currentNode.left != null) {
+                    //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
                     currentNode.value = minNode(currentNode.right).value;
                     currentNode.right = deleteHelper(currentNode.value, currentNode.right);
                 } else {
                     if (currentNode.left != null) {
+                        //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
                         currentNode = currentNode.left;
                     } else {
+                        //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
                         currentNode = currentNode.right;
                     }
                 }
@@ -247,7 +251,7 @@ public class Tree {
 
 
     private TreeNode minNode(TreeNode root){
-        if (root.right == null){
+        if (root.left == null){
             return root;
         } else {
             return minNode(root.left);
