@@ -113,65 +113,6 @@ public class Tree {
         root = getNewTreeNode(data[0]);
     }
 
-    // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
-    private int[] toArray() {
-        int[] result = new int[(int)Math.pow(2, height() + 1) - 1];
-
-        traverseToArray(1, result, root);
-
-        return result;
-    }
-
-    private void traverseToArray(int i, int[] result, TreeNode current) {
-        if (current == null) { return; }
-        result[i - 1] = current.value;
-        traverseToArray(i * 2, result, current.left);
-        traverseToArray(i * 2 + 1, result, current.right);
-    }
-
-    public String toString() {
-        if (root == null) return "";
-
-        int[] arrayTree = toArray();
-        String result = "";
-        int spaceNumber = height();
-
-        String currentHeightString = "";
-        String currentSpaces = "";
-        for (int i = 0; i < arrayTree.length; i++) {
-            if (isPowerOfTwo(i + 1)) {
-                if (spaceNumber != height()) {
-                    currentHeightString += currentSpaces + "\n";
-                    result += currentHeightString;
-                }
-                currentSpaces = getNumberOfSpaces(spaceNumber);
-                spaceNumber--;
-                currentHeightString = currentSpaces;
-            }
-            String element;
-            if (arrayTree[i] == 0) { element = " "; }
-            else { element = Integer.toString(arrayTree[i]); }
-            currentHeightString += element + " ";
-        }
-        result += currentHeightString.substring(0, currentHeightString.length() - 1);
-        result += "\nsize: " + size();
-
-        return result;
-    }
-
-    private String getNumberOfSpaces(int number) {
-        String result = "";
-        for (int i = 0; i < number; i++) { result += " "; }
-        return result;
-    }
-
-    public boolean isPowerOfTwoWrapper(int i) { return isPowerOfTwo(i); }
-    private boolean isPowerOfTwo(int i) {
-        if (i == 1) return true;
-        if (i % 2 == 0) return isPowerOfTwo(i / 2);
-        return false;
-    }
-
     /**
      * Does tree contain a given input value.
      * @param searchVal value to search for
@@ -256,5 +197,64 @@ public class Tree {
         } else {
             return minNode(root.left);
         }
+    }
+
+    // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
+    private int[] toArray() {
+        int[] result = new int[(int)Math.pow(2, height() + 1) - 1];
+
+        traverseToArray(1, result, root);
+
+        return result;
+    }
+
+    private void traverseToArray(int i, int[] result, TreeNode current) {
+        if (current == null) { return; }
+        result[i - 1] = current.value;
+        traverseToArray(i * 2, result, current.left);
+        traverseToArray(i * 2 + 1, result, current.right);
+    }
+
+    public String toString() {
+        if (root == null) return "";
+
+        int[] arrayTree = toArray();
+        String result = "";
+        int spaceNumber = height();
+
+        String currentHeightString = "";
+        String currentSpaces = "";
+        for (int i = 0; i < arrayTree.length; i++) {
+            if (isPowerOfTwo(i + 1)) {
+                if (spaceNumber != height()) {
+                    currentHeightString += currentSpaces + "\n";
+                    result += currentHeightString;
+                }
+                currentSpaces = getNumberOfSpaces(spaceNumber);
+                spaceNumber--;
+                currentHeightString = currentSpaces;
+            }
+            String element;
+            if (arrayTree[i] == 0) { element = " "; }
+            else { element = Integer.toString(arrayTree[i]); }
+            currentHeightString += element + " ";
+        }
+        result += currentHeightString.substring(0, currentHeightString.length() - 1);
+        result += "\nsize: " + size();
+
+        return result;
+    }
+
+    private String getNumberOfSpaces(int number) {
+        String result = "";
+        for (int i = 0; i < number; i++) { result += " "; }
+        return result;
+    }
+
+    public boolean isPowerOfTwoWrapper(int i) { return isPowerOfTwo(i); }
+    private boolean isPowerOfTwo(int i) {
+        if (i == 1) return true;
+        if (i % 2 == 0) return isPowerOfTwo(i / 2);
+        return false;
     }
 }
