@@ -10,7 +10,7 @@ public class Tree {
     /** The root node of a tree */
     TreeNode root;
     /** Represents number of nodes in the tree */
-    private int size;
+    protected int size;
 
     /** Represents a single node of a tree */
     protected class TreeNode {
@@ -49,7 +49,6 @@ public class Tree {
             if (right) { parent.right = this; }
             else { parent.left = this; }
         }
-
     }
 
     /** Wraps creating a new node with incrementing size */
@@ -62,6 +61,18 @@ public class Tree {
 
     /** @return the height of the tree */
     private int height() { return root.height; }
+
+    /*
+    Return the height of the node.
+     */
+    //TODO May by it will be better to stay this function instead of height()???
+    protected int getHeight(TreeNode node){
+        if (node != null){
+            return node.height;
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * Add a new node with key newValue into the tree
@@ -132,7 +143,7 @@ public class Tree {
     /*
     Recursive helper for searching a value in the tree.
      */
-    private TreeNode searching (TreeNode currentNode, int searchVal){
+    protected TreeNode searching (TreeNode currentNode, int searchVal){
         if (currentNode == null){
             return null;
         }
@@ -162,7 +173,7 @@ public class Tree {
         }
     }
 
-    private TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
+    protected TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
         if (currentNode == null) {
             return currentNode;
         }
@@ -190,6 +201,28 @@ public class Tree {
         return currentNode;
     }
 
+//    protected TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
+//        if (currentNode == null) {
+//            return currentNode;
+//        }
+//        if (currentNode.value > toDelete) {
+//            currentNode.left = deleteHelper(toDelete, currentNode.left);
+//        } else {
+//            if (currentNode.value < toDelete) {
+//                currentNode.right = deleteHelper(toDelete, currentNode.right);
+//            } else {
+//                if (currentNode.right == null) return currentNode.left;
+//                if (currentNode.left == null) return currentNode.right;
+//                TreeNode correctionNode = currentNode;
+//                currentNode = minNode(correctionNode.right);
+//                currentNode.right = removeMinNode(correctionNode.right);
+//                currentNode.left = correctionNode.left;
+//                return currentNode;
+//            }
+//        }
+//        return currentNode;
+//    }
+
 
     private TreeNode minNode(TreeNode root){
         if (root.left == null){
@@ -197,6 +230,13 @@ public class Tree {
         } else {
             return minNode(root.left);
         }
+    }
+
+    private TreeNode removeMinNode(TreeNode node){
+        if (node.left == null) return node.right;
+        node.left = removeMinNode(node.left);
+        node.height = getHeight(node.left) + getHeight(node.right) + 1;
+        return node;
     }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END

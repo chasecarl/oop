@@ -31,13 +31,6 @@ public class AvlTree extends Tree {
         return X;
     }
 
-    private int getHeight(TreeNode node){
-        if (node != null){
-            return node.height;
-        } else {
-            return 0;
-        }
-    }
 
     private int balanceFactor(TreeNode node){
         return getHeight(node.right) - getHeight(node.left);
@@ -69,5 +62,15 @@ public class AvlTree extends Tree {
          return true; //TODO To delete this line later
     }
 
+    public boolean delete(int toDelete){
+        TreeNode node = searching(this.root, toDelete);
+        if (node != null){
+            correction(deleteHelper(toDelete, root));
+            size--;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

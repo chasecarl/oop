@@ -22,7 +22,6 @@ public class Test {
         //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
 
 
-
     }
 
     public static boolean addandprint(Tree tree, int newValue) {
