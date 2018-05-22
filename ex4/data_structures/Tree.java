@@ -13,21 +13,21 @@ public class Tree {
     /** The root node of a tree */
     TreeNode root;
     /** Represents number of nodes in the tree */
-    private int size;
+    protected int size;
 
     /** Represents a single node of a tree */
-    private class TreeNode {
+    protected class TreeNode {
 
         /** The left child of a node */
-        private TreeNode left;
+        protected TreeNode left;
         /** The right child of a node */
-        private TreeNode right;
+        protected TreeNode right;
         /** The parent of a node */
-        private TreeNode parent;
+        protected TreeNode parent;
         /** The value that this node stores */
-        private int value;
+        protected int value;
         /** The height of this node */
-        private int height;
+        protected int height;
 
         /** Constructs a TreeNode given its integer value */
         private TreeNode(int value) {
@@ -52,7 +52,6 @@ public class Tree {
             if (right) { parent.right = this; }
             else { parent.left = this; }
         }
-
     }
 
     /** Wraps creating a new node with incrementing size */
@@ -66,13 +65,27 @@ public class Tree {
     /** @return the height of the tree */
     private int height() { return root.height; }
 
+    /*
+    Return the height of the node.
+     */
+    //TODO May by it will be better to stay this function instead of height()???
+    protected int getHeight(TreeNode node){
+        if (node != null){
+            return node.height;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * Add a new node with key newValue into the tree
      * @param newValue new value to add to the tree
      * @return false iff newValue already exists in the tree
      */
     public boolean add(int newValue) {
-        return addHelper(root, root, RIGHT, newValue);
+        boolean result = addHelper(root, root, RIGHT, newValue);
+        heightCheck(root);
+        return result;
     }
 
     private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
@@ -191,6 +204,8 @@ public class Tree {
     public int contains(int searchVal){
         TreeNode node = searching(this.root, searchVal);
         if (node != null){
+            if (searchVal > this.root.value) return 1 + this.root.right.height - node.height;
+            if (searchVal < this.root.value) return 1 + this.root.left.height - node.height;
             return this.height() - node.height;
         }
         else {
@@ -201,7 +216,7 @@ public class Tree {
     /*
     Recursive helper for searching a value in the tree.
      */
-    private TreeNode searching (TreeNode currentNode, int searchVal){
+    protected TreeNode searching (TreeNode currentNode, int searchVal){
         if (currentNode == null){
             return null;
         }
@@ -224,6 +239,7 @@ public class Tree {
         TreeNode node = searching(this.root, toDelete);
         if (node != null){
             deleteHelper(toDelete, root);
+            heightCheck(root);
             size--;
             return true;
         } else {
@@ -231,7 +247,7 @@ public class Tree {
         }
     }
 
-    private TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
+    protected TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
         if (currentNode == null) {
             return currentNode;
         }
@@ -259,6 +275,22 @@ public class Tree {
         return currentNode;
     }
 
+    protected int heightCheck(TreeNode node) {
+        if (node.right != null && node.left != null) {
+            node.height = 1 + Math.max(heightCheck(node.right), heightCheck(node.left));
+        } else {
+            if (node.right != null){
+                node.height = 1 + heightCheck(node.right);
+            } else {
+                if (node.left != null){
+                    node.height = 1 + heightCheck(node.left);
+                } else {
+                    node.height = 0;
+                }
+            }
+        }
+        return node.height;
+    }
 
     private TreeNode minNode(TreeNode root){
         if (root.left == null){
@@ -266,6 +298,13 @@ public class Tree {
         } else {
             return minNode(root.left);
         }
+    }
+
+    private TreeNode removeMinNode(TreeNode node){
+        if (node.left == null) return node;
+        node.left = removeMinNode(node.left);
+        node.height = getHeight(node.left) + getHeight(node.right) + 1;
+        return node;
     }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END

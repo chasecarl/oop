@@ -15,15 +15,13 @@ public class Test {
         }
         System.out.println(deleteAndPrint(tree, 666));
         System.out.println(deleteAndPrint(tree, 5));
-        //System.out.println(deleteAndPrint(tree, 9));
+        System.out.println(deleteAndPrint(tree, 9));
         System.out.println(deleteAndPrint(tree, 1));
         System.out.println(deleteAndPrint(tree, 6));
         for (int i = 1; i < 10; i++){
             conainsAndPrint(tree, i);
         }
         //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
-
-
 
 //        Iterator<Integer> iterator = tree.iterator();
 //        System.out.println(iterator.hasNext());
