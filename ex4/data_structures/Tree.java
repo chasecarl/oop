@@ -1,5 +1,8 @@
 package oop.ex4.data_structures;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class Tree {
 
     /** Used in addHelper method to change its behavior to the left part of the tree */
@@ -102,13 +105,79 @@ public class Tree {
     /** @return number of nodes in the tree */
     public int size() { return size; }
 
+    /**
+     * Returns an iterator for the Avl Tree. The returned iterator iterates
+     * over the tree nodes in an ascending order, and does NOT implement the remove() method.
+     * @return an iterator for the Avl Tree.
+     */
+    public java.util.Iterator<Integer> iterator() {
+        class TreeIterator implements Iterator<Integer> {
+
+            private TreeNode current;
+
+            @Override
+            public boolean hasNext() {
+                if (current == null) { return true; }
+                return successor(current) != null;
+            }
+
+            @Override
+            public Integer next() {
+                if (current == null) {
+                    current = getMinTreeNode(root);
+                    if (current == null) { throw new NoSuchElementException(); }
+                }
+                else { current = successor(current); }
+                return current.value;
+            }
+        }
+        return new TreeIterator();
+    }
+
+    /**
+     * @param subTreeRoot the root of a subtree
+     * @return the minimum node of a subtree
+     */
+    private TreeNode getMinTreeNode(TreeNode subTreeRoot) {
+        if (subTreeRoot == null) { return null; }
+        TreeNode current = subTreeRoot;
+        while (current.left != null) { current = current.left; }
+        return current;
+    }
+
+    /**
+     * @param node a node regarding which a successor is searched
+     * @return a successor node
+     */
+    private TreeNode successor(TreeNode node) {
+        if (node == null) { return null; }
+        if (node.right == null) {
+            // it means that node is root
+            if (node.parent == null) { return null; }
+//            // it means that we're in a right subtree
+//            else if (node.parent.value < node.value) { return null; }
+//            // it means that we're in a left subtree
+            else return getFirstRightTurn(node);
+        }
+        else return getMinTreeNode(node.right);
+    }
+
+    private TreeNode getFirstRightTurn(TreeNode node) {
+        TreeNode parent = node.parent;
+        while (parent != null && parent.value < node.value) {
+            node = parent;
+            parent = parent.parent;
+        }
+        return parent;
+    }
+
     /** A default constructor */
     public Tree() { this.root = null; }
 
     /** A constructor that builds the tree by adding the elements in the input array one-by-one.
      * If the same values appears twice (or more) in the list, it is ignored. */
     public Tree(int[] data) {
-        root = getNewTreeNode(data[0]);
+        for (int element : data) { this.add(element); }
     }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
