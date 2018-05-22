@@ -100,4 +100,14 @@ public class AvlTree extends Tree {
         }
         return node;
     }
+    
+
+    public boolean add(int newValue){
+        super.add(newValue);
+        //TODO To add correction of node's height
+        //return correction(//TODO To add the node, which was changed, here)
+         return true; //TODO To delete this line later
+    }
+
+
 }
