@@ -80,7 +80,9 @@ public class Tree {
      * @return false iff newValue already exists in the tree
      */
     public boolean add(int newValue) {
-        return addHelper(root, root, RIGHT, newValue);
+        boolean result = addHelper(root, root, RIGHT, newValue);
+        heightCheck(root);
+        return result;
     }
     
     private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
@@ -133,6 +135,8 @@ public class Tree {
     public int contains(int searchVal){
         TreeNode node = searching(this.root, searchVal);
         if (node != null){
+            if (searchVal > this.root.value) return 1 + this.root.right.height - node.height;
+            if (searchVal < this.root.value) return 1 + this.root.left.height - node.height;
             return this.height() - node.height;
         }
         else {
@@ -166,6 +170,7 @@ public class Tree {
         TreeNode node = searching(this.root, toDelete);
         if (node != null){
             deleteHelper(toDelete, root);
+            heightCheck(root);
             size--;
             return true;
         } else {
@@ -201,28 +206,22 @@ public class Tree {
         return currentNode;
     }
 
-//    protected TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
-//        if (currentNode == null) {
-//            return currentNode;
-//        }
-//        if (currentNode.value > toDelete) {
-//            currentNode.left = deleteHelper(toDelete, currentNode.left);
-//        } else {
-//            if (currentNode.value < toDelete) {
-//                currentNode.right = deleteHelper(toDelete, currentNode.right);
-//            } else {
-//                if (currentNode.right == null) return currentNode.left;
-//                if (currentNode.left == null) return currentNode.right;
-//                TreeNode correctionNode = currentNode;
-//                currentNode = minNode(correctionNode.right);
-//                currentNode.right = removeMinNode(correctionNode.right);
-//                currentNode.left = correctionNode.left;
-//                return currentNode;
-//            }
-//        }
-//        return currentNode;
-//    }
-
+    protected int heightCheck(TreeNode node) {
+        if (node.right != null && node.left != null) {
+            node.height = 1 + Math.max(heightCheck(node.right), heightCheck(node.left));
+        } else {
+            if (node.right != null){
+                node.height = 1 + heightCheck(node.right);
+            } else {
+                if (node.left != null){
+                    node.height = 1 + heightCheck(node.left);
+                } else {
+                    node.height = 0;
+                }
+            }
+        }
+        return node.height;
+    }
 
     private TreeNode minNode(TreeNode root){
         if (root.left == null){
@@ -233,7 +232,7 @@ public class Tree {
     }
 
     private TreeNode removeMinNode(TreeNode node){
-        if (node.left == null) return node.right;
+        if (node.left == null) return node;
         node.left = removeMinNode(node.left);
         node.height = getHeight(node.left) + getHeight(node.right) + 1;
         return node;

@@ -65,7 +65,9 @@ public class AvlTree extends Tree {
     public boolean delete(int toDelete){
         TreeNode node = searching(this.root, toDelete);
         if (node != null){
+            deleteHelper(toDelete, node);
             correction(deleteHelper(toDelete, root));
+            heightCheck(root);
             size--;
             return true;
         } else {

@@ -13,7 +13,7 @@ public class Test {
         }
         System.out.println(deleteAndPrint(tree, 666));
         System.out.println(deleteAndPrint(tree, 5));
-        //System.out.println(deleteAndPrint(tree, 9));
+        System.out.println(deleteAndPrint(tree, 9));
         System.out.println(deleteAndPrint(tree, 1));
         System.out.println(deleteAndPrint(tree, 6));
         for (int i = 1; i < 10; i++){
