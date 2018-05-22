@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class Test {
     public static void main(String[] args) {
-//        int[] data = { 0 };
+
         Tree tree = new Tree();
         int num = 5;
         for (int i = 0; i < 5; i++) {
@@ -13,13 +13,25 @@ public class Test {
 //            System.out.println(i + Boolean.toString(tree.isPowerOfTwoWrapper(i)));
         }
 
-        Iterator<Integer> iterator = tree.iterator();
-        System.out.println(iterator.hasNext());
-        while(iterator.hasNext()) {
-            System.out.println(iterator.hasNext());
-            System.out.println(iterator.next());
+//        Iterator<Integer> iterator = tree.iterator();
+//        System.out.println(iterator.hasNext());
+//        while(iterator.hasNext()) {
+//            System.out.println(iterator.hasNext());
+//            System.out.println(iterator.next());
+//        }
+//        System.out.println(iterator.hasNext());
+
+        int[] array = { 10, 5, 15, 2, 7, 1, 3, 6, 8, 12, 20, 11, 13, 18, 25 };
+        Tree arrayTree = new Tree(array);
+        System.out.println(arrayTree);
+
+        Iterator<Integer> iterator2 = arrayTree.iterator();
+        System.out.println(iterator2.hasNext());
+        while(iterator2.hasNext()) {
+            System.out.println(iterator2.next());
+            System.out.println(iterator2.hasNext());
         }
-        System.out.println(iterator.hasNext());
+
     }
 
     public static boolean addandprint(Tree tree, int newValue) {

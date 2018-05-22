@@ -132,19 +132,29 @@ public class Tree {
     }
 
     /**
-     * @param current a node regarding which a successor is searched
+     * @param node a node regarding which a successor is searched
      * @return a successor node
      */
-    private TreeNode successor(TreeNode current) {
-        if (current == null) { return null; }
-        if (current.right == null) {
-            // it means that current is root
-            if (current.parent == null) { return null; }
-            // it means that we're in a right subtree
-            else if (current.parent.value < current.value) { return null; }
-            else return current.parent;
+    private TreeNode successor(TreeNode node) {
+        if (node == null) { return null; }
+        if (node.right == null) {
+            // it means that node is root
+            if (node.parent == null) { return null; }
+//            // it means that we're in a right subtree
+//            else if (node.parent.value < node.value) { return null; }
+//            // it means that we're in a left subtree
+            else return getFirstRightTurn(node);
         }
-        else return getMinTreeNode(current.right);
+        else return getMinTreeNode(node.right);
+    }
+
+    private TreeNode getFirstRightTurn(TreeNode node) {
+        TreeNode parent = node.parent;
+        while (parent != null && parent.value < node.value) {
+            node = parent;
+            parent = parent.parent;
+        }
+        return parent;
     }
 
     /** A default constructor */
@@ -153,7 +163,7 @@ public class Tree {
     /** A constructor that builds the tree by adding the elements in the input array one-by-one.
      * If the same values appears twice (or more) in the list, it is ignored. */
     public Tree(int[] data) {
-        this.root = new TreeNode(data[0]);
+        for (int element : data) { this.add(element); }
     }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
