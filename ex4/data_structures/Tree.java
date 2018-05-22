@@ -52,6 +52,7 @@ public class Tree {
             if (right) { parent.right = this; }
             else { parent.left = this; }
         }
+
     }
 
     /** Wraps creating a new node with incrementing size */
@@ -80,6 +81,7 @@ public class Tree {
                 this.root = getNewTreeNode(newValue);
                 return true;
             }
+            new TreeNode(newValue, parent, right);
             getNewTreeNode(newValue, parent, right);
             return true;
         }
@@ -178,6 +180,92 @@ public class Tree {
      * If the same values appears twice (or more) in the list, it is ignored. */
     public Tree(int[] data) {
         for (int element : data) { this.add(element); }
+    }
+
+    /**
+     * Does tree contain a given input value.
+     * @param searchVal value to search for
+     * @return if val is found in the tree, return the depth of its node (where 0 is the root).
+     * Otherwise -- return -1.
+     */
+    public int contains(int searchVal){
+        TreeNode node = searching(this.root, searchVal);
+        if (node != null){
+            return this.height() - node.height;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    /*
+    Recursive helper for searching a value in the tree.
+     */
+    private TreeNode searching (TreeNode currentNode, int searchVal){
+        if (currentNode == null){
+            return null;
+        }
+        if (searchVal == currentNode.value){
+            return currentNode;
+        }
+        if (searchVal > currentNode.value){
+            return searching(currentNode.right, searchVal);
+        } else {
+            return searching(currentNode.left, searchVal);
+        }
+    }
+
+    /**
+     * Remove a node from the tree, if it exists.
+     * @param toDelete value to delete
+     * @return true iff toDelete found and deleted
+     */
+    public boolean delete(int toDelete){
+        TreeNode node = searching(this.root, toDelete);
+        if (node != null){
+            deleteHelper(toDelete, root);
+            size--;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
+        if (currentNode == null) {
+            return currentNode;
+        }
+        if (currentNode.value > toDelete) {
+            currentNode.left = deleteHelper(toDelete, currentNode.left);
+        } else {
+            if (currentNode.value < toDelete) {
+                currentNode.right = deleteHelper(toDelete, currentNode.right);
+            } else {
+                if (currentNode.right != null && currentNode.left != null) {
+                    //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
+                    currentNode.value = minNode(currentNode.right).value;
+                    currentNode.right = deleteHelper(currentNode.value, currentNode.right);
+                } else {
+                    if (currentNode.left != null) {
+                        //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
+                        currentNode = currentNode.left;
+                    } else {
+                        //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
+                        currentNode = currentNode.right;
+                    }
+                }
+            }
+        }
+        return currentNode;
+    }
+
+
+    private TreeNode minNode(TreeNode root){
+        if (root.left == null){
+            return root;
+        } else {
+            return minNode(root.left);
+        }
     }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
