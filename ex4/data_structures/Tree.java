@@ -91,7 +91,11 @@ public class Tree {
         }
     }
 
-    // TODO: IT AT LEAST NEEDS TO THROW A NoSuchElementException!
+    /**
+     * Returns an iterator for the Avl Tree. The returned iterator iterates
+     * over the tree nodes in an ascending order, and does NOT implement the remove() method.
+     * @return an iterator for the Avl Tree.
+     */
     public java.util.Iterator<Integer> iterator() {
         class TreeIterator implements Iterator<Integer> {
 
@@ -116,6 +120,10 @@ public class Tree {
         return new TreeIterator();
     }
 
+    /**
+     * @param subTreeRoot the root of a subtree
+     * @return the minimum node of a subtree
+     */
     private TreeNode getMinTreeNode(TreeNode subTreeRoot) {
         if (subTreeRoot == null) { return null; }
         TreeNode current = subTreeRoot;
@@ -123,6 +131,10 @@ public class Tree {
         return current;
     }
 
+    /**
+     * @param current a node regarding which a successor is searched
+     * @return a successor node
+     */
     private TreeNode successor(TreeNode current) {
         if (current == null) { return null; }
         if (current.right == null) {
