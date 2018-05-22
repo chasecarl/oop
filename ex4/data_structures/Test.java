@@ -1,5 +1,7 @@
 package oop.ex4.data_structures;
 
+import java.util.Iterator;
+
 public class Test {
     public static void main(String[] args) {
 //        int[] data = { 0 };
@@ -11,6 +13,13 @@ public class Test {
 //            System.out.println(i + Boolean.toString(tree.isPowerOfTwoWrapper(i)));
         }
 
+        Iterator<Integer> iterator = tree.iterator();
+        System.out.println(iterator.hasNext());
+        while(iterator.hasNext()) {
+            System.out.println(iterator.hasNext());
+            System.out.println(iterator.next());
+        }
+        System.out.println(iterator.hasNext());
     }
 
     public static boolean addandprint(Tree tree, int newValue) {

@@ -1,5 +1,8 @@
 package oop.ex4.data_structures;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class Tree {
 
     /** The root node of a tree */
@@ -86,6 +89,50 @@ public class Tree {
             }
             return false;
         }
+    }
+
+    // TODO: IT AT LEAST NEEDS TO THROW A NoSuchElementException!
+    public java.util.Iterator<Integer> iterator() {
+        class TreeIterator implements Iterator<Integer> {
+
+            private TreeNode current;
+
+            @Override
+            public boolean hasNext() {
+                if (current == null) { return true; }
+                return successor(current) != null;
+            }
+
+            @Override
+            public Integer next() {
+                if (current == null) {
+                    current = getMinTreeNode(root);
+                    if (current == null) { throw new NoSuchElementException(); }
+                }
+                else { current = successor(current); }
+                return current.value;
+            }
+        }
+        return new TreeIterator();
+    }
+
+    private TreeNode getMinTreeNode(TreeNode subTreeRoot) {
+        if (subTreeRoot == null) { return null; }
+        TreeNode current = subTreeRoot;
+        while (current.left != null) { current = current.left; }
+        return current;
+    }
+
+    private TreeNode successor(TreeNode current) {
+        if (current == null) { return null; }
+        if (current.right == null) {
+            // it means that current is root
+            if (current.parent == null) { return null; }
+            // it means that we're in a right subtree
+            else if (current.parent.value < current.value) { return null; }
+            else return current.parent;
+        }
+        else return getMinTreeNode(current.right);
     }
 
     /** A default constructor */
