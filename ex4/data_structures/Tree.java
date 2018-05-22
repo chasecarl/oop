@@ -13,18 +13,18 @@ public class Tree {
     private int size;
 
     /** Represents a single node of a tree */
-    private class TreeNode {
+    protected class TreeNode {
 
         /** The left child of a node */
-        private TreeNode left;
+        protected TreeNode left;
         /** The right child of a node */
-        private TreeNode right;
+        protected TreeNode right;
         /** The parent of a node */
-        private TreeNode parent;
+        protected TreeNode parent;
         /** The value that this node stores */
-        private int value;
+        protected int value;
         /** The height of this node */
-        private int height;
+        protected int height;
 
         /** Constructs a TreeNode given its integer value */
         private TreeNode(int value) {
