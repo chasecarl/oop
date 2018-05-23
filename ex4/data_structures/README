@@ -28,8 +28,7 @@ some other type of BST node from an AVL node.
 =============================
 =  Implementation details   =
 =============================
-In the Game class, in order to store the different players, I chose the TreeSet dataset because we perform many
- insertion and deletion actions on this dataset, actions which a balanced tree performs efficiently.
+We decided to use our class that represents tree's node to store a whole tree.
 
 
 =============================

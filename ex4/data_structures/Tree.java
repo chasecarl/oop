@@ -325,6 +325,7 @@ public class Tree {
      * @param data elements to put into the tree
      * */
     public Tree(int[] data) {
+        this();
         for (int element : data) { this.add(element); }
     }
 
