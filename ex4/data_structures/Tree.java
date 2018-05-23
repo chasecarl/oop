@@ -17,25 +17,25 @@ public class Tree {
     /** The root node of a tree */
     TreeNode root;
     /** Represents number of nodes in the tree */
-    protected int size;
+    int size;
 
     //------------------------------------------------------------------------------------------------
     //------------------------------------------ Node ------------------------------------------------
     //------------------------------------------------------------------------------------------------
 
     /** Represents a single node of a tree */
-    protected class TreeNode {
+    class TreeNode {
 
         /** The left child of a node */
-        protected TreeNode left;
+        TreeNode left;
         /** The right child of a node */
-        protected TreeNode right;
+        TreeNode right;
         /** The parent of a node */
-        protected TreeNode parent;
+        TreeNode parent;
         /** The value that this node stores */
-        protected int value;
+        int value;
         /** The height of this node */
-        protected int height;
+        int height;
 
         /** Constructs a TreeNode given its integer value */
         private TreeNode(int value) {
@@ -91,9 +91,9 @@ public class Tree {
         return addHelper(newValue)!= null;
     }
 
-    protected TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue); }
+    TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue); }
 
-    protected TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
+    TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
                 root = getNewTreeNode(newValue);
@@ -222,7 +222,7 @@ public class Tree {
     /*
     Recursive helper for searching a value in the tree.
      */
-    protected TreeNode searching (TreeNode currentNode, int searchVal){
+    TreeNode searching (TreeNode currentNode, int searchVal){
         if (currentNode == null){
             return null;
         }
@@ -257,7 +257,7 @@ public class Tree {
         }
     }
 
-    protected TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
+    TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
         if (currentNode == null) {
             return currentNode;
         }
@@ -285,7 +285,7 @@ public class Tree {
         return currentNode;
     }
 
-    protected int heightCheck(TreeNode node) {
+    int heightCheck(TreeNode node) {
         if (node.right != null && node.left != null) {
             node.height = 1 + Math.max(heightCheck(node.right), heightCheck(node.left));
         } else {
