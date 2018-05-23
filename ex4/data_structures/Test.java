@@ -1,8 +1,10 @@
 package oop.ex4.data_structures;
 
+import java.util.Iterator;
+
 public class Test {
     public static void main(String[] args) {
-//        int[] data = { 0 };
+
         Tree tree = new Tree();
         System.out.println(tree.size());
         int num = 5;
@@ -34,6 +36,24 @@ public class Test {
         //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
         //1 3 /5/ 7 9 /11/ 13 15 /17/ 19 21
 
+//        Iterator<Integer> iterator = tree.iterator();
+//        System.out.println(iterator.hasNext());
+//        while(iterator.hasNext()) {
+//            System.out.println(iterator.hasNext());
+//            System.out.println(iterator.next());
+//        }
+//        System.out.println(iterator.hasNext());
+
+        int[] array = { 10, 5, 15, 2, 7, 1, 3, 6, 8, 12, 20, 11, 13, 18, 25 };
+        Tree arrayTree = new Tree(array);
+        System.out.println(arrayTree);
+
+        Iterator<Integer> iterator2 = arrayTree.iterator();
+        System.out.println(iterator2.hasNext());
+        while(iterator2.hasNext()) {
+            System.out.println(iterator2.next());
+            System.out.println(iterator2.hasNext());
+        }
 
     }
 
