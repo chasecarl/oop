@@ -66,7 +66,7 @@ public class Test {
         String aLotOfBars = "--------------------------------------";
         System.out.println("\n" + aLotOfBars+ "AVL" + aLotOfBars + "\n");
 
-        int[] sortedArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        int[] sortedArray = { 1, 2, 3 };
         AvlTree avltree1 = new AvlTree(sortedArray);
         System.out.println(avltree1);
 

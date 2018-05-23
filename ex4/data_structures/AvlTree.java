@@ -87,7 +87,13 @@ public class AvlTree extends Tree {
 
 
     public boolean add(int newValue){
-        return correction(addHelper(newValue)) != null;
+        TreeNode current = addHelper(newValue);
+        if (current == null) { return false; }
+        do {
+            correction(current);
+            current = current.parent;
+        } while (current != null);
+        return true;
     }
 
     public boolean delete(int toDelete){
