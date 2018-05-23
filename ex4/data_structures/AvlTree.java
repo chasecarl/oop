@@ -3,9 +3,10 @@ package oop.ex4.data_structures;
 public class AvlTree extends Tree {
 
 
-    //TODO May by it will be better to stay this function instead of height()???
-    /*
-    Return the height of the node.
+    //TODO: IS THIS RIGHT?
+    /**
+     * @param node a no
+     * @return the height of the node
      */
     private int getHeight(TreeNode node) {
         if (node != null) {
@@ -20,13 +21,7 @@ public class AvlTree extends Tree {
      * @param h - height of the tree (a non-negative number).
      * @return maximum number of nodes of height h
      */
-    public static int findMaxNodes(int h){
-        int result = 0;
-        for (int i = 0; i <= h; i++) {
-            result += Math.pow(2, i);
-        }
-        return result;
-    }
+    public static int findMaxNodes(int h) { return (int)Math.pow(2, h); }
 
 //    public static int findMinNodes(int h) {
 //
@@ -121,4 +116,11 @@ public class AvlTree extends Tree {
      * @param data - values to add to tree
      */
     public AvlTree(int[] data) { super(data);}
+
+    public AvlTree(AvlTree tree) {
+        this();
+        TreeNode[] array = toArray(tree);
+    }
+
+
 }

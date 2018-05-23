@@ -75,7 +75,7 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
 
     /** @return the height of the tree */
-    private int height() { return root.height; }
+    int height() { return root.height; }
 
 
     //------------------------------------------------------------------------------------------------
@@ -308,11 +308,43 @@ public class Tree {
         }
     }
 
+    //------------------------------------------------------------------------------------------------
+    //--------------------------------------- findMaxNodes -------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
+    /**
+     * A method that calculates the maximum number of nodes in an AVL tree of height h
+     * @param h - height of the tree (a non-negative number).
+     * @return maximum number of nodes IN AN AVL TREE OF HEIGHT h
+     */
+    private int getMaxTreeNodesNumber(int h) {
+        int result = 0;
+        for (int i = 0; i <= h; i++) {
+            result += Math.pow(2, i);
+        }
+        return result;
+    }
+
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------ array representation --------------------------------------
+    //------------------------------------------------------------------------------------------------
+
+    TreeNode[] toArray(Tree tree) {
+        TreeNode[] result = new TreeNode[getMaxTreeNodesNumber(tree.height())];
+        traverseToArray(1, result, tree.root);
+        return result;
+    }
+
+    void traverseToArray(int i, TreeNode[] result, TreeNode current) {
+        if (current == null) { return; }
+        result[i - 1] = current;
+        traverseToArray(i * 2, result, current.left);
+        traverseToArray(i * 2 + 1, result, current.right);
+    }
 
     //------------------------------------------------------------------------------------------------
     //--------------------------------------- Constructors -------------------------------------------
     //------------------------------------------------------------------------------------------------
-    // TODO: ADD THE THIRD ONE
 
     /** A default constructor */
     public Tree() { this.root = null; }
@@ -331,25 +363,10 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
 
-    private int[] toArray() {
-        int[] result = new int[(int)Math.pow(2, height() + 1) - 1];
-
-        traverseToArray(1, result, root);
-
-        return result;
-    }
-
-    private void traverseToArray(int i, int[] result, TreeNode current) {
-        if (current == null) { return; }
-        result[i - 1] = current.value;
-        traverseToArray(i * 2, result, current.left);
-        traverseToArray(i * 2 + 1, result, current.right);
-    }
-
     public String toString() {
         if (root == null) return "";
 
-        int[] arrayTree = toArray();
+        TreeNode[] arrayTree = toArray(this);
         String result = "";
         int spaceNumber = height();
 
@@ -366,8 +383,8 @@ public class Tree {
                 currentHeightString = currentSpaces;
             }
             String element;
-            if (arrayTree[i] == 0) { element = " "; }
-            else { element = Integer.toString(arrayTree[i]); }
+            if (arrayTree[i] == null) { element = " "; }
+            else { element = Integer.toString(arrayTree[i].value); }
             currentHeightString += element + " ";
         }
         result += currentHeightString.substring(0, currentHeightString.length() - 1);
@@ -382,7 +399,6 @@ public class Tree {
         return result;
     }
 
-    public boolean isPowerOfTwoWrapper(int i) { return isPowerOfTwo(i); }
     private boolean isPowerOfTwo(int i) {
         if (i == 1) return true;
         if (i % 2 == 0) return isPowerOfTwo(i / 2);
