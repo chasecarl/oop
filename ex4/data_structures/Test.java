@@ -6,20 +6,33 @@ public class Test {
         Tree tree = new Tree();
         System.out.println(tree.size());
         int num = 5;
-        for (int i = 0; i < 5; i++) {
-            System.out.println(addandprint(tree, num - i));
-            System.out.println(addandprint(tree, num + i));
-//            System.out.println(i + Boolean.toString(tree.isPowerOfTwoWrapper(i)));
-        }
-        System.out.println(deleteAndPrint(tree, 666));
+        //for (int i = 0; i < 5; i++) {
+          //  System.out.println(addandprint(tree, num - i));
+            //System.out.println(addandprint(tree, num + i));
+//  //          System.out.println(i + Boolean.toString(tree.isPowerOfTwoWrapper(i)));
+        //}
+        System.out.println(addandprint(tree, 11));
+        System.out.println(addandprint(tree, 5));
+        System.out.println(addandprint(tree, 17));
+        System.out.println(addandprint(tree, 3));
+        System.out.println(addandprint(tree, 9));
+        System.out.println(addandprint(tree, 15));
+        System.out.println(addandprint(tree, 21));
+        System.out.println(addandprint(tree, 1));
+        System.out.println(addandprint(tree, 7));
+        System.out.println(addandprint(tree, 13));
+        System.out.println(addandprint(tree, 19));
         System.out.println(deleteAndPrint(tree, 5));
-        System.out.println(deleteAndPrint(tree, 9));
-        System.out.println(deleteAndPrint(tree, 1));
-        System.out.println(deleteAndPrint(tree, 6));
-        for (int i = 1; i < 10; i++){
-            conainsAndPrint(tree, i);
-        }
+        //System.out.println(deleteAndPrint(tree, 666));
+        //System.out.println(deleteAndPrint(tree, 5));
+        //System.out.println(deleteAndPrint(tree, 9));
+        //System.out.println(deleteAndPrint(tree, 1));
+        //System.out.println(deleteAndPrint(tree, 6));
+        //for (int i = 1; i < 10; i++){
+        //    conainsAndPrint(tree, i);
+        //}
         //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
+        //1 3 /5/ 7 9 /11/ 13 15 /17/ 19 21
 
 
     }
