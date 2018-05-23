@@ -120,6 +120,10 @@ public class AvlTree extends Tree {
     public AvlTree(AvlTree tree) {
         this();
         TreeNode[] array = toArray(tree);
+        for (int i = 0; i < array.length; i++) {
+            TreeNode current = array[i];
+            if (current != null) { add(current.value); }
+        }
     }
 
 

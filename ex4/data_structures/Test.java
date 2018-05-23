@@ -66,14 +66,17 @@ public class Test {
         String aLotOfBars = "--------------------------------------";
         System.out.println("\n" + aLotOfBars+ "AVL" + aLotOfBars + "\n");
 
-        int[] sortedArray = { 1, 2, 3 };
-        AvlTree avltree1 = new AvlTree(sortedArray);
+        int[] someArray = { 1, 3, 0, -1, 2 };
+        AvlTree avltree1 = new AvlTree(someArray);
         System.out.println(avltree1);
 
         Iterator<Integer> avlIterator = avltree1.iterator();
 
         System.out.println(AvlTree.findMaxNodes(0));
         System.out.println(AvlTree.findMaxNodes(5));
+
+        AvlTree avlTree1copy = new AvlTree(avltree1);
+        System.out.println(avlTree1copy);
     }
 
     public static boolean addandprint(Tree tree, int newValue) {
