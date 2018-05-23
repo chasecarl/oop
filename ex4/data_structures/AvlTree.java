@@ -2,12 +2,25 @@ package oop.ex4.data_structures;
 
 public class AvlTree extends Tree {
 
+
+    //TODO May by it will be better to stay this function instead of height()???
+    /*
+    Return the height of the node.
+     */
+    private int getHeight(TreeNode node) {
+        if (node != null) {
+            return node.height;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * A method that calculates the maximum number of nodes in an AVL tree of height h
      * @param h - height of the tree (a non-negative number).
      * @return maximum number of nodes of height h
      */
-    public static int findMaxNodes(int h) {
+    public static int findMaxNodes(int h){
         int result = 0;
         for (int i = 0; i <= h; i++) {
             result += Math.pow(2, i);

@@ -77,17 +77,6 @@ public class Tree {
     /** @return the height of the tree */
     private int height() { return root.height; }
 
-    /*
-    Return the height of the node.
-     */
-    //TODO May by it will be better to stay this function instead of height()???
-    protected int getHeight(TreeNode node){
-        if (node != null){
-            return node.height;
-        } else {
-            return 0;
-        }
-    }
 
     //------------------------------------------------------------------------------------------------
     //------------------------------------------ add -------------------------------------------------
@@ -322,13 +311,6 @@ public class Tree {
         }
     }
 
-    // TODO: REMOVE IT??
-    private TreeNode removeMinNode(TreeNode node){
-        if (node.left == null) return node;
-        node.left = removeMinNode(node.left);
-        node.height = getHeight(node.left) + getHeight(node.right) + 1;
-        return node;
-    }
 
     //------------------------------------------------------------------------------------------------
     //--------------------------------------- Constructors -------------------------------------------
