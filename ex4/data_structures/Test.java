@@ -19,7 +19,7 @@ public class Test {
         System.out.println(deleteAndPrint(tree, 1));
         System.out.println(deleteAndPrint(tree, 6));
         for (int i = 1; i < 10; i++){
-            conainsAndPrint(tree, i);
+            containsAndPrint(tree, i);
         }
         //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
 
@@ -62,11 +62,11 @@ public class Test {
         return result;
     }
 
-    public static void conainsAndPrint(Tree tree, int searchVal){
+    public static void containsAndPrint(Tree tree, int searchVal){
         int result = tree.contains(searchVal);
         System.out.println("\nValue " + searchVal + " is contained:\n");
         System.out.println(tree);
-        System.out.println("Height:" + result);
+        System.out.println("Depth:" + result);
     }
 
 }
