@@ -83,10 +83,12 @@ public class Tree {
      * @return false iff newValue already exists in the tree
      */
     public boolean add(int newValue) {
-        return addHelper(root, root, RIGHT, newValue) != null;
+        return addHelper(newValue)!= null;
     }
 
-    private TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
+    protected TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue); }
+
+    protected TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
                 root = getNewTreeNode(newValue);

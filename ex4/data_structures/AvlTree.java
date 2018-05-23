@@ -36,7 +36,8 @@ public class AvlTree extends Tree {
         return getHeight(node.right) - getHeight(node.left);
     }
 
-    private TreeNode correction(TreeNode node){
+    private TreeNode correction(TreeNode node) {
+        if (node == null) return null;
         heightCorrection(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
@@ -56,10 +57,7 @@ public class AvlTree extends Tree {
 
 
     public boolean add(int newValue){
-        super.add(newValue);
-        //TODO To add correction of node's height
-        //return correction(//TODO To add the node, which was changed, here)
-         return true; //TODO To delete this line later
+        return correction(addHelper(newValue)) != null;
     }
 
     public boolean delete(int toDelete){
@@ -75,4 +73,12 @@ public class AvlTree extends Tree {
         }
     }
 
+    /** A default constructor. */
+    public AvlTree() { super();}
+
+    /** A constructor that builds the tree by adding the elements in the input array one-by-one
+     *  If the same values appears twice (or more) in the list, it is ignored.
+     * @param data - values to add to tree
+     */
+    public AvlTree(int[] data) { super(data);}
 }

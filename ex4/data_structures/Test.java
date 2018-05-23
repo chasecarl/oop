@@ -42,6 +42,16 @@ public class Test {
             System.out.println(iterator2.hasNext());
         }
 
+        //------------------------------ AVL ----------------------------------------
+
+        String aLotOfBars = "--------------------------------------";
+        System.out.println("\n" + aLotOfBars+ "AVL" + aLotOfBars + "\n");
+
+        int[] sortedArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        AvlTree avltree1 = new AvlTree(sortedArray);
+        System.out.println(avltree1);
+
+
     }
 
     public static boolean addandprint(Tree tree, int newValue) {
