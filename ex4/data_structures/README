@@ -1,0 +1,43 @@
+chasecarl
+ilia.bezgin
+
+
+
+
+=============================
+=      File description     =
+=============================
+Tree.java - an implementation of a binary search tree
+AvlTree.java - an implementation of an AVL tree
+
+
+=============================
+=          Design           =
+=============================
+We decided to write a super class of a binary search tree from which the AVL tree class inherits.
+In our opinion, it's a good style programming because there is a clear 'is-a' relationship between
+AVLT and BST, so if another programmer comes and wants to write other kind of BST, he or she will
+already have the base class.
+The thing that also points for this design is that we decided to write an inner class that
+represents a node in BST and from the same reasoning it potentially has more potential (less restrictions)
+comparing to something like AVL node. Even if they are the same, it's awkward to inherit a class for
+some other type of BST node from an AVL node.
+
+
+
+=============================
+=  Implementation details   =
+=============================
+We decided to use our class that represents tree's node to store a whole tree.
+
+
+=============================
+=    Answers to questions   =
+=============================
+
+1)
+The smart player picks his moves by simply looking at all the possible valid moves, and picking the
+one that leaves the opponent with the minimal number of possible steps (and which does not make him lose)
+
+2)
+On the given example, the run time of the TresSet took 0.3445 seconds, While the run time of the HashSet took 0.56547.
