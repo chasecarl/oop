@@ -112,8 +112,7 @@ public class Tree {
         // we need to reassign here because there can be old null link (as next stored value before adding a new node)
         next = getChild(current, right);
         if (added != null) {
-            //added.height = 1 + getHeight(added.left) + getHeight(added.right);
-            heightCheck(root);
+            if (current.height <= next.height) { current.height++; }
             return added;
         }
         return null;
