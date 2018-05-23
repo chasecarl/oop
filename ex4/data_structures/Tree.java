@@ -121,9 +121,9 @@ public class Tree {
     public int size() { return size; }
 
     /**
-     * Returns an iterator for the Avl Tree. The returned iterator iterates
+     * Returns an iterator for the Tree. The returned iterator iterates
      * over the tree nodes in an ascending order, and does NOT implement the remove() method.
-     * @return an iterator for the Avl Tree.
+     * @return an iterator for the Tree.
      */
     public java.util.Iterator<Integer> iterator() {
         class TreeIterator implements Iterator<Integer> {
@@ -190,7 +190,9 @@ public class Tree {
     public Tree() { this.root = null; }
 
     /** A constructor that builds the tree by adding the elements in the input array one-by-one.
-     * If the same values appears twice (or more) in the list, it is ignored. */
+     * If the same values appears twice (or more) in the list, it is ignored.
+     * @param data elements to put into the tree
+     * */
     public Tree(int[] data) {
         for (int element : data) { this.add(element); }
     }
