@@ -65,17 +65,6 @@ public class Tree {
     /** @return the height of the tree */
     private int height() { return root.height; }
 
-    /*
-    Return the height of the node.
-     */
-    //TODO May by it will be better to stay this function instead of height()???
-    protected int getHeight(TreeNode node){
-        if (node != null){
-            return node.height;
-        } else {
-            return 0;
-        }
-    }
 
     /**
      * Add a new node with key newValue into the tree
@@ -300,12 +289,6 @@ public class Tree {
         }
     }
 
-    private TreeNode removeMinNode(TreeNode node){
-        if (node.left == null) return node;
-        node.left = removeMinNode(node.left);
-        node.height = getHeight(node.left) + getHeight(node.right) + 1;
-        return node;
-    }
 
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
     private int[] toArray() {

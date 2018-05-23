@@ -2,6 +2,19 @@ package oop.ex4.data_structures;
 
 public class AvlTree extends Tree {
 
+
+    //TODO May by it will be better to stay this function instead of height()???
+    /*
+    Return the height of the node.
+     */
+    private int getHeight(TreeNode node){
+        if (node != null){
+            return node.height;
+        } else {
+            return 0;
+        }
+    }
+
     private void heightCorrection(TreeNode node){
         int leftHeight = getHeight(node.left);
         int rightHeight = getHeight(node.right);
