@@ -112,7 +112,8 @@ public class Tree {
         // we need to reassign here because there can be old null link (as next stored value before adding a new node)
         next = getChild(current, right);
         if (added != null) {
-            if (current.height <= next.height) { current.height++; }
+            //added.height = 1 + getHeight(added.left) + getHeight(added.right);
+            heightCheck(root);
             return added;
         }
         return null;
@@ -268,15 +269,12 @@ public class Tree {
                 currentNode.right = deleteHelper(toDelete, currentNode.right);
             } else {
                 if (currentNode.right != null && currentNode.left != null) {
-                    //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
                     currentNode.value = minNode(currentNode.right).value;
                     currentNode.right = deleteHelper(currentNode.value, currentNode.right);
                 } else {
                     if (currentNode.left != null) {
-                        //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
                         currentNode = currentNode.left;
                     } else {
-                        //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
                         currentNode = currentNode.right;
                     }
                 }

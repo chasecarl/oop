@@ -63,19 +63,23 @@ public class AvlTree extends Tree {
     }
 
     private TreeNode correction(TreeNode node) {
+//        if (depthCalculator(node) > 1){
+//            node = node.parent.parent;
+//        }
         if (node == null) return null;
-        heightCheck(node);
+        //heightCheck(root);
+        heightCorrection(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
                 node.right = rightRotation(node.right);
-                return leftRotation(node);
             }
+            return leftRotation(node);
         } else {
             if (balanceFactor(node) == -2){
                 if (balanceFactor(node.left) > 0){
                     node.left = leftRotation(node.left);
-                    return rightRotation(node);
                 }
+                return rightRotation(node);
             }
         }
         return node;
