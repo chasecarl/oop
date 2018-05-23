@@ -5,6 +5,10 @@ import java.util.NoSuchElementException;
 
 public class Tree {
 
+    //------------------------------------------------------------------------------------------------
+    //---------------------------------------- fields ------------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
     /** Used in addHelper method to change its behavior to the left part of the tree */
     private static final boolean LEFT = false;
     /** Used in addHelper method to change its behavior to the right part of the tree */
@@ -14,6 +18,10 @@ public class Tree {
     TreeNode root;
     /** Represents number of nodes in the tree */
     protected int size;
+
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------ Node ------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /** Represents a single node of a tree */
     protected class TreeNode {
@@ -62,6 +70,10 @@ public class Tree {
 
     private TreeNode getNewTreeNode(int newValue) { return getNewTreeNode(newValue, null, RIGHT); }
 
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------- height methods -------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
     /** @return the height of the tree */
     private int height() { return root.height; }
 
@@ -76,6 +88,10 @@ public class Tree {
             return 0;
         }
     }
+
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------ add -------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Add a new node with key newValue into the tree
@@ -120,8 +136,16 @@ public class Tree {
         else return node.left;
     }
 
+    //------------------------------------------------------------------------------------------------
+    //-------------------------------------------- size ----------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
     /** @return number of nodes in the tree */
     public int size() { return size; }
+
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------- iterator -------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Returns an iterator for the Tree. The returned iterator iterates
@@ -172,9 +196,6 @@ public class Tree {
         if (node.right == null) {
             // it means that node is root
             if (node.parent == null) { return null; }
-//            // it means that we're in a right subtree
-//            else if (node.parent.value < node.value) { return null; }
-//            // it means that we're in a left subtree
             else return getFirstRightTurn(node);
         }
         else return getMinTreeNode(node.right);
@@ -189,16 +210,9 @@ public class Tree {
         return parent;
     }
 
-    /** A default constructor */
-    public Tree() { this.root = null; }
-
-    /** A constructor that builds the tree by adding the elements in the input array one-by-one.
-     * If the same values appears twice (or more) in the list, it is ignored.
-     * @param data elements to put into the tree
-     * */
-    public Tree(int[] data) {
-        for (int element : data) { this.add(element); }
-    }
+    //------------------------------------------------------------------------------------------------
+    //----------------------------------------- contains ---------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Does tree contain a given input value.
@@ -234,6 +248,10 @@ public class Tree {
             return searching(currentNode.left, searchVal);
         }
     }
+
+    //------------------------------------------------------------------------------------------------
+    //---------------------------------------- delete ------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Remove a node from the tree, if it exists.
@@ -297,6 +315,7 @@ public class Tree {
         return node.height;
     }
 
+    // TODO: CHANGE THIS ONE WITH getMinTreeNode
     private TreeNode minNode(TreeNode root){
         if (root.left == null){
             return root;
@@ -305,6 +324,7 @@ public class Tree {
         }
     }
 
+    // TODO: REMOVE IT??
     private TreeNode removeMinNode(TreeNode node){
         if (node.left == null) return node;
         node.left = removeMinNode(node.left);
@@ -312,7 +332,27 @@ public class Tree {
         return node;
     }
 
+    //------------------------------------------------------------------------------------------------
+    //--------------------------------------- Constructors -------------------------------------------
+    //------------------------------------------------------------------------------------------------
+    // TODO: ADD THE THIRD ONE
+
+    /** A default constructor */
+    public Tree() { this.root = null; }
+
+    /** A constructor that builds the tree by adding the elements in the input array one-by-one.
+     * If the same values appears twice (or more) in the list, it is ignored.
+     * @param data elements to put into the tree
+     * */
+    public Tree(int[] data) {
+        for (int element : data) { this.add(element); }
+    }
+
+    //------------------------------------------------------------------------------------------------
+    //-------------------------------------- Other (print)  ------------------------------------------
+    //------------------------------------------------------------------------------------------------
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
+
     private int[] toArray() {
         int[] result = new int[(int)Math.pow(2, height() + 1) - 1];
 

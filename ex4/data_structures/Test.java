@@ -51,6 +51,8 @@ public class Test {
         AvlTree avltree1 = new AvlTree(sortedArray);
         System.out.println(avltree1);
 
+        Iterator<Integer> avlIterator = avltree1.iterator();
+
 
     }
 
