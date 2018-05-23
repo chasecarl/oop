@@ -165,11 +165,9 @@ public class Tree {
 
             @Override
             public Integer next() {
-                if (current == null) {
-                    current = getMinTreeNode(root);
-                    if (current == null) { throw new NoSuchElementException(); }
-                }
+                if (current == null) { current = getMinTreeNode(root); }
                 else { current = successor(current); }
+                if (current == null) { throw new NoSuchElementException(); }
                 return current.value;
             }
         }
