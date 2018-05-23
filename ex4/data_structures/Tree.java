@@ -83,36 +83,39 @@ public class Tree {
      * @return false iff newValue already exists in the tree
      */
     public boolean add(int newValue) {
-        return addHelper(root, root, RIGHT, newValue);
+        return addHelper(root, root, RIGHT, newValue) != null;
     }
 
-    private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
+    private TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
-                this.root = getNewTreeNode(newValue);
-                return true;
+                root = getNewTreeNode(newValue);
+                return root;
             }
-            new TreeNode(newValue, parent, right);
-            getNewTreeNode(newValue, parent, right);
-            return true;
+            return getNewTreeNode(newValue, parent, right);
         }
-        if (newValue == current.value) { return false; }
-        else if (newValue < current.value) {
-            if (addHelper(current.left, current, LEFT, newValue)) {
-                // TODO: CAN IT BE LESS??
-                if (current.height <= current.left.height) { current.height++; }
-                return true;
-            }
-            return false;
+        if (newValue == current.value) { return null; }
+        if (newValue < current.value) { return go(LEFT, newValue, current); }
+        else { return go(RIGHT, newValue, current); }
+    }
+
+    private TreeNode go(boolean right, int newValue, TreeNode current) {
+        TreeNode next = getChild(current, right);
+        TreeNode added = addHelper(next, current, right, newValue);
+        // we need to reassign here because there can be old null link (as next stored value before adding a new node)
+        next = getChild(current, right);
+        if (added != null) {
+            if (current.height <= next.height) { current.height++; }
+            return added;
         }
-        else {
-            if (addHelper(current.right, current, RIGHT, newValue)) {
-                // TODO: CAN IT BE LESS??
-                if (current.height <= current.right.height) { current.height++; }
-                return true;
-            }
-            return false;
-        }
+        return null;
+    }
+
+    private TreeNode getChild(TreeNode node, boolean right) {
+        // actually we don't need this line, but maybe we will use this method somewhere where node can be null
+        if (node == null) return null;
+        if (right) return node.right;
+        else return node.left;
     }
 
     /** @return number of nodes in the tree */
