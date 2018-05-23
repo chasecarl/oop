@@ -7,12 +7,25 @@ public class AvlTree extends Tree {
     /*
     Return the height of the node.
      */
-    private int getHeight(TreeNode node){
-        if (node != null){
+    private int getHeight(TreeNode node) {
+        if (node != null) {
             return node.height;
         } else {
             return 0;
         }
+    }
+
+    /**
+     * A method that calculates the maximum number of nodes in an AVL tree of height h
+     * @param h - height of the tree (a non-negative number).
+     * @return maximum number of nodes of height h
+     */
+    public static int findMaxNodes(int h){
+        int result = 0;
+        for (int i = 0; i <= h; i++) {
+            result += Math.pow(2, i);
+        }
+        return result;
     }
 
     private void heightCorrection(TreeNode node){
@@ -49,8 +62,9 @@ public class AvlTree extends Tree {
         return getHeight(node.right) - getHeight(node.left);
     }
 
-    private TreeNode correction(TreeNode node){
-        heightCorrection(node);
+    private TreeNode correction(TreeNode node) {
+        if (node == null) return null;
+        heightCheck(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
                 node.right = rightRotation(node.right);
@@ -69,10 +83,7 @@ public class AvlTree extends Tree {
 
 
     public boolean add(int newValue){
-        super.add(newValue);
-        //TODO To add correction of node's height
-        //return correction(//TODO To add the node, which was changed, here)
-         return true; //TODO To delete this line later
+        return correction(addHelper(newValue)) != null;
     }
 
     public boolean delete(int toDelete){
@@ -88,4 +99,12 @@ public class AvlTree extends Tree {
         }
     }
 
+    /** A default constructor. */
+    public AvlTree() { super();}
+
+    /** A constructor that builds the tree by adding the elements in the input array one-by-one
+     *  If the same values appears twice (or more) in the list, it is ignored.
+     * @param data - values to add to tree
+     */
+    public AvlTree(int[] data) { super(data);}
 }

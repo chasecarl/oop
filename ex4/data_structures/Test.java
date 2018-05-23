@@ -33,6 +33,12 @@ public class Test {
         //for (int i = 1; i < 10; i++){
         //    conainsAndPrint(tree, i);
         //}
+        System.out.println(deleteAndPrint(tree, 9));
+        System.out.println(deleteAndPrint(tree, 1));
+        System.out.println(deleteAndPrint(tree, 6));
+        for (int i = 1; i < 10; i++){
+            containsAndPrint(tree, i);
+        }
         //TODO After deletion of the element the height of the node doesn't changes, HOW TO SOLVE IT???
         //1 3 /5/ 7 9 /11/ 13 15 /17/ 19 21
 
@@ -55,6 +61,19 @@ public class Test {
             System.out.println(iterator2.hasNext());
         }
 
+        //------------------------------ AVL ----------------------------------------
+
+        String aLotOfBars = "--------------------------------------";
+        System.out.println("\n" + aLotOfBars+ "AVL" + aLotOfBars + "\n");
+
+        int[] sortedArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        AvlTree avltree1 = new AvlTree(sortedArray);
+        System.out.println(avltree1);
+
+        Iterator<Integer> avlIterator = avltree1.iterator();
+
+        System.out.println(AvlTree.findMaxNodes(0));
+        System.out.println(AvlTree.findMaxNodes(5));
     }
 
     public static boolean addandprint(Tree tree, int newValue) {
@@ -75,11 +94,11 @@ public class Test {
         return result;
     }
 
-    public static void conainsAndPrint(Tree tree, int searchVal){
+    public static void containsAndPrint(Tree tree, int searchVal){
         int result = tree.contains(searchVal);
         System.out.println("\nValue " + searchVal + " is contained:\n");
         System.out.println(tree);
-        System.out.println("Height:" + result);
+        System.out.println("Depth:" + result);
     }
 
 }

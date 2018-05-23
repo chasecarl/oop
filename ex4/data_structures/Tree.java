@@ -5,6 +5,10 @@ import java.util.NoSuchElementException;
 
 public class Tree {
 
+    //------------------------------------------------------------------------------------------------
+    //---------------------------------------- fields ------------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
     /** Used in addHelper method to change its behavior to the left part of the tree */
     private static final boolean LEFT = false;
     /** Used in addHelper method to change its behavior to the right part of the tree */
@@ -14,6 +18,10 @@ public class Tree {
     TreeNode root;
     /** Represents number of nodes in the tree */
     protected int size;
+
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------ Node ------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /** Represents a single node of a tree */
     protected class TreeNode {
@@ -62,9 +70,17 @@ public class Tree {
 
     private TreeNode getNewTreeNode(int newValue) { return getNewTreeNode(newValue, null, RIGHT); }
 
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------- height methods -------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
     /** @return the height of the tree */
     private int height() { return root.height; }
 
+
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------ add -------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Add a new node with key newValue into the tree
@@ -72,47 +88,58 @@ public class Tree {
      * @return false iff newValue already exists in the tree
      */
     public boolean add(int newValue) {
-        boolean result = addHelper(root, root, RIGHT, newValue);
-        heightCheck(root);
-        return result;
+        return addHelper(newValue)!= null;
     }
 
-    private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
+    protected TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue); }
+
+    protected TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
-                this.root = getNewTreeNode(newValue);
-                return true;
+                root = getNewTreeNode(newValue);
+                return root;
             }
-            new TreeNode(newValue, parent, right);
-            getNewTreeNode(newValue, parent, right);
-            return true;
+            return getNewTreeNode(newValue, parent, right);
         }
-        if (newValue == current.value) { return false; }
-        else if (newValue < current.value) {
-            if (addHelper(current.left, current, LEFT, newValue)) {
-                // TODO: CAN IT BE LESS??
-                if (current.height <= current.left.height) { current.height++; }
-                return true;
-            }
-            return false;
-        }
-        else {
-            if (addHelper(current.right, current, RIGHT, newValue)) {
-                // TODO: CAN IT BE LESS??
-                if (current.height <= current.right.height) { current.height++; }
-                return true;
-            }
-            return false;
-        }
+        if (newValue == current.value) { return null; }
+        if (newValue < current.value) { return go(LEFT, newValue, current); }
+        else { return go(RIGHT, newValue, current); }
     }
+
+    private TreeNode go(boolean right, int newValue, TreeNode current) {
+        TreeNode next = getChild(current, right);
+        TreeNode added = addHelper(next, current, right, newValue);
+        // we need to reassign here because there can be old null link (as next stored value before adding a new node)
+        next = getChild(current, right);
+        if (added != null) {
+            if (current.height <= next.height) { current.height++; }
+            return added;
+        }
+        return null;
+    }
+
+    private TreeNode getChild(TreeNode node, boolean right) {
+        // actually we don't need this line, but maybe we will use this method somewhere where node can be null
+        if (node == null) return null;
+        if (right) return node.right;
+        else return node.left;
+    }
+
+    //------------------------------------------------------------------------------------------------
+    //-------------------------------------------- size ----------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /** @return number of nodes in the tree */
     public int size() { return size; }
 
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------- iterator -------------------------------------------
+    //------------------------------------------------------------------------------------------------
+
     /**
-     * Returns an iterator for the Avl Tree. The returned iterator iterates
+     * Returns an iterator for the Tree. The returned iterator iterates
      * over the tree nodes in an ascending order, and does NOT implement the remove() method.
-     * @return an iterator for the Avl Tree.
+     * @return an iterator for the Tree.
      */
     public java.util.Iterator<Integer> iterator() {
         class TreeIterator implements Iterator<Integer> {
@@ -127,11 +154,9 @@ public class Tree {
 
             @Override
             public Integer next() {
-                if (current == null) {
-                    current = getMinTreeNode(root);
-                    if (current == null) { throw new NoSuchElementException(); }
-                }
+                if (current == null) { current = getMinTreeNode(root); }
                 else { current = successor(current); }
+                if (current == null) { throw new NoSuchElementException(); }
                 return current.value;
             }
         }
@@ -158,9 +183,6 @@ public class Tree {
         if (node.right == null) {
             // it means that node is root
             if (node.parent == null) { return null; }
-//            // it means that we're in a right subtree
-//            else if (node.parent.value < node.value) { return null; }
-//            // it means that we're in a left subtree
             else return getFirstRightTurn(node);
         }
         else return getMinTreeNode(node.right);
@@ -175,14 +197,9 @@ public class Tree {
         return parent;
     }
 
-    /** A default constructor */
-    public Tree() { this.root = null; }
-
-    /** A constructor that builds the tree by adding the elements in the input array one-by-one.
-     * If the same values appears twice (or more) in the list, it is ignored. */
-    public Tree(int[] data) {
-        for (int element : data) { this.add(element); }
-    }
+    //------------------------------------------------------------------------------------------------
+    //----------------------------------------- contains ---------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Does tree contain a given input value.
@@ -218,6 +235,10 @@ public class Tree {
             return searching(currentNode.left, searchVal);
         }
     }
+
+    //------------------------------------------------------------------------------------------------
+    //---------------------------------------- delete ------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
     /**
      * Remove a node from the tree, if it exists.
@@ -281,6 +302,7 @@ public class Tree {
         return node.height;
     }
 
+    // TODO: CHANGE THIS ONE WITH getMinTreeNode
     private TreeNode minNode(TreeNode root){
         if (root.left == null){
             return root;
@@ -290,7 +312,27 @@ public class Tree {
     }
 
 
+    //------------------------------------------------------------------------------------------------
+    //--------------------------------------- Constructors -------------------------------------------
+    //------------------------------------------------------------------------------------------------
+    // TODO: ADD THE THIRD ONE
+
+    /** A default constructor */
+    public Tree() { this.root = null; }
+
+    /** A constructor that builds the tree by adding the elements in the input array one-by-one.
+     * If the same values appears twice (or more) in the list, it is ignored.
+     * @param data elements to put into the tree
+     * */
+    public Tree(int[] data) {
+        for (int element : data) { this.add(element); }
+    }
+
+    //------------------------------------------------------------------------------------------------
+    //-------------------------------------- Other (print)  ------------------------------------------
+    //------------------------------------------------------------------------------------------------
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
+
     private int[] toArray() {
         int[] result = new int[(int)Math.pow(2, height() + 1) - 1];
 
