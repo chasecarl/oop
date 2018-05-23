@@ -83,9 +83,7 @@ public class Tree {
      * @return false iff newValue already exists in the tree
      */
     public boolean add(int newValue) {
-        boolean result = addHelper(root, root, RIGHT, newValue);
-        heightCheck(root);
-        return result;
+        return addHelper(root, root, RIGHT, newValue);
     }
 
     private boolean addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
