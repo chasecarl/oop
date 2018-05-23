@@ -2,6 +2,19 @@ package oop.ex4.data_structures;
 
 public class AvlTree extends Tree {
 
+    /**
+     * A method that calculates the maximum number of nodes in an AVL tree of height h
+     * @param h - height of the tree (a non-negative number).
+     * @return maximum number of nodes of height h
+     */
+    public static int findMaxNodes(int h) {
+        int result = 0;
+        for (int i = 0; i <= h; i++) {
+            result += Math.pow(2, i);
+        }
+        return result;
+    }
+
     private void heightCorrection(TreeNode node){
         int leftHeight = getHeight(node.left);
         int rightHeight = getHeight(node.right);
@@ -38,7 +51,7 @@ public class AvlTree extends Tree {
 
     private TreeNode correction(TreeNode node) {
         if (node == null) return null;
-        heightCorrection(node);
+        heightCheck(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
                 node.right = rightRotation(node.right);

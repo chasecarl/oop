@@ -53,7 +53,8 @@ public class Test {
 
         Iterator<Integer> avlIterator = avltree1.iterator();
 
-
+        System.out.println(AvlTree.findMaxNodes(0));
+        System.out.println(AvlTree.findMaxNodes(5));
     }
 
     public static boolean addandprint(Tree tree, int newValue) {
