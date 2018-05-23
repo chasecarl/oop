@@ -15,6 +15,10 @@ public class AvlTree extends Tree {
         return result;
     }
 
+//    public static int findMinNodes(int h) {
+//
+//    }
+
     private void heightCorrection(TreeNode node){
         int leftHeight = getHeight(node.left);
         int rightHeight = getHeight(node.right);
