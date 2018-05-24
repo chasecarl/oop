@@ -313,11 +313,11 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
 
     /**
-     * A method that calculates the maximum number of nodes in an AVL tree of height h
+     * A method that calculates the maximum number of nodes in a of height h
      * @param h - height of the tree (a non-negative number).
      * @return maximum number of nodes IN AN AVL TREE OF HEIGHT h
      */
-    private int getMaxTreeNodesNumber(int h) {
+    private int findMaxNodes(int h) {
         int result = 0;
         for (int i = 0; i <= h; i++) {
             result += Math.pow(2, i);
@@ -330,7 +330,7 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
 
     TreeNode[] toArray(Tree tree) {
-        TreeNode[] result = new TreeNode[getMaxTreeNodesNumber(tree.height())];
+        TreeNode[] result = new TreeNode[findMaxNodes(tree.height())];
         traverseToArray(1, result, tree.root);
         return result;
     }
