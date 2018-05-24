@@ -74,6 +74,12 @@ public class Test {
 
         System.out.println(AvlTree.findMaxNodes(0));
         System.out.println(AvlTree.findMaxNodes(5));
+        System.out.println(AvlTree.findMinNodes(0));
+        System.out.println(AvlTree.findMinNodes(1));
+        System.out.println(AvlTree.findMinNodes(3));
+        System.out.println(AvlTree.findMinNodes(4));
+        System.out.println(AvlTree.findMinNodes(5));
+        System.out.println(AvlTree.findMinNodes(10));
 
         AvlTree avlTree1copy = new AvlTree(avltree1);
         System.out.println(avlTree1copy);

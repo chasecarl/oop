@@ -93,6 +93,14 @@ public class Tree {
 
     TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue); }
 
+    /**
+     * A recursive method that traverses tree given the new node value to find place for it
+     * @param current the node which we're looking at the current recursion level
+     * @param parent the node from which the current recursion was called
+     * @param right a boolean value that indicates whether we go to the left or to the right child
+     * @param newValue a value to add
+     * @return a newly added TreeNode; null iff there already a node with the newValue
+     */
     TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
         if (current == null) {
             if (parent == null) {
@@ -106,6 +114,13 @@ public class Tree {
         else { return go(RIGHT, newValue, current); }
     }
 
+    /**
+     * Takes an appropriate child and calls addHelper on him and then updates height when needed
+     * @param right a boolean value that indicates whether we go to the left or to the right child
+     * @param newValue a value to add
+     * @param current the node which we're looking at the current recursion level
+     * @return a newly added TreeNode; null iff there already a node with the newValue
+     */
     private TreeNode go(boolean right, int newValue, TreeNode current) {
         TreeNode next = getChild(current, right);
         TreeNode added = addHelper(next, current, right, newValue);
@@ -118,6 +133,12 @@ public class Tree {
         return null;
     }
 
+    /**
+     * Simple method to get the left/right child
+     * @param node the parent node
+     * @param right a boolean value that indicates which child do we need
+     * @return an appropriate child
+     */
     private TreeNode getChild(TreeNode node, boolean right) {
         // actually we don't need this line, but maybe we will use this method somewhere where node can be null
         if (node == null) return null;
@@ -313,11 +334,11 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
 
     /**
-     * A method that calculates the maximum number of nodes in an AVL tree of height h
+     * A method that calculates the maximum number of nodes in a tree of height h
      * @param h - height of the tree (a non-negative number).
-     * @return maximum number of nodes IN AN AVL TREE OF HEIGHT h
+     * @return maximum number of nodes in a tree of height h
      */
-    private int getMaxTreeNodesNumber(int h) {
+    public static int findMaxNodes(int h) {
         int result = 0;
         for (int i = 0; i <= h; i++) {
             result += Math.pow(2, i);
@@ -329,12 +350,23 @@ public class Tree {
     //------------------------------------ array representation --------------------------------------
     //------------------------------------------------------------------------------------------------
 
+    /**
+     * Creates an array of TreeNode that represents the given tree
+     * @param tree a tree representation of which we want
+     * @return an array of TreeNode representing the given tree
+     */
     TreeNode[] toArray(Tree tree) {
-        TreeNode[] result = new TreeNode[getMaxTreeNodesNumber(tree.height())];
+        TreeNode[] result = new TreeNode[findMaxNodes(tree.height())];
         traverseToArray(1, result, tree.root);
         return result;
     }
 
+    /**
+     * Recursively inserts nodes to the given array on the appropriate indices.
+     * @param i number of the current node in the array (starting from 1)
+     * @param result the array in which we insert the nodes
+     * @param current the node which we're looking at the current recursion level
+     */
     void traverseToArray(int i, TreeNode[] result, TreeNode current) {
         if (current == null) { return; }
         result[i - 1] = current;
