@@ -44,13 +44,16 @@ public class AvlTree extends Tree {
     }
 
     private TreeNode rightRotation(TreeNode node){
-        TreeNode X = node;
-        TreeNode Y = node.left;
-        X.left = Y.right;
-        Y.right = X;
-        heightCorrection(X);
-        heightCorrection(Y);
-        return Y;
+        TreeNode left = node.left;
+        node.left = left.right;
+        if (left.right != null) { left.right.parent = node; }
+        left.parent = node.parent;
+        if (node.parent == null)  { root = left; }
+        else if (node == node.parent.left) { node.parent.left = left; }
+        else { node.parent.right = left; }
+        left.left = node;
+        node.parent = left;
+        return node;
     }
 
     private TreeNode leftRotation(TreeNode node){
@@ -72,11 +75,7 @@ public class AvlTree extends Tree {
     }
 
     private TreeNode correction(TreeNode node) {
-//        if (depthCalculator(node) > 1){
-//            node = node.parent.parent;
-//        }
         if (node == null) return null;
-        //heightCheck(root);
         heightCorrection(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
@@ -93,7 +92,6 @@ public class AvlTree extends Tree {
         }
         return node;
     }
-
 
     public boolean add(int newValue){
         TreeNode current = addHelper(newValue);
