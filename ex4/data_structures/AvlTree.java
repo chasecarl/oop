@@ -36,6 +36,13 @@ public class AvlTree extends Tree {
             node.height = rightHeight + 1;
         }
     }
+
+    private void correctHeight(TreeNode node) {
+        if (node.left != null) { correctHeight(node.left); }
+        if (node.right != null) { correctHeight(node.right); }
+
+    }
+
     private TreeNode rightRotation(TreeNode node){
         TreeNode X = node;
         TreeNode Y = node.left;
@@ -47,13 +54,16 @@ public class AvlTree extends Tree {
     }
 
     private TreeNode leftRotation(TreeNode node){
-        TreeNode X = node.right;
-        TreeNode Y = node;
-        Y.right = X.left;
-        X.left = Y;
-        heightCorrection(Y);
-        heightCorrection(X);
-        return X;
+        TreeNode right = node.right;
+        node.right = right.left;
+        if (right.left != null) { right.left.parent = node; }
+        right.parent = node.parent;
+        if (node.parent == null) { root = right; }
+        else if (node == node.parent.left)  { node.parent.left = right; }
+        else { node.parent.right = right; }
+        right.left = node;
+        node.parent = right;
+        return node;
     }
 
 
