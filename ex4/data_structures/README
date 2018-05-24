@@ -29,6 +29,11 @@ some other type of BST node from an AVL node.
 =  Implementation details   =
 =============================
 We decided to use our class that represents tree's node to store a whole tree.
+We decided to put findMaxNodes in the base class because it is the same for BST as for AVL;
+therefore we had to slightly change the comment so that the description matches to the class.
+We decided to have boolean variables LEFT and RIGHT to alter methods' behaviour.
+In the Tree class, an overloaded addHelper (that uses only one int value) can be called with either LEFT
+or RIGHT - it doesn't matter.
 
 
 =============================
