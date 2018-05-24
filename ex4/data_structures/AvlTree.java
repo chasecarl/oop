@@ -2,6 +2,8 @@ package oop.ex4.data_structures;
 
 public class AvlTree extends Tree {
 
+    /** Stores a Fibonacci number */
+    private static final double FIBONACCI = 0.5 * (1 + Math.sqrt(5));
 
     //TODO: IS THIS RIGHT?
     /**
@@ -16,23 +18,9 @@ public class AvlTree extends Tree {
         }
     }
 
-    // TODO: DELETE?
-    /**
-     * A method that calculates the maximum number of nodes in an AVL tree of height h
-     * @param h - height of the tree (a non-negative number).
-     * @return maximum number of nodes of height h
-     */
-    public static int findMaxNodes(int h) {
-        int result = 0;
-        for (int i = 0; i <= h; i++) {
-            result += Math.pow(2, i);
-        }
-        return result;
+    public static int findMinNodes(int h) {
+        return (int)((Math.pow(FIBONACCI, h + 3) - Math.pow(-FIBONACCI, -(h + 3))) / (2 * FIBONACCI - 1)) - 1;
     }
-
-//    public static int findMinNodes(int h) {
-//
-//    }
 
     private void heightCorrection(TreeNode node){
         int leftHeight = getHeight(node.left);
@@ -124,13 +112,15 @@ public class AvlTree extends Tree {
      */
     public AvlTree(int[] data) { super(data);}
 
-    //TODO: MAYBE IT SHOULD CALL super.add
+    /** A copy constructor that builds the tree from existing tree.
+     * @param tree - tree to be copied
+     */
     public AvlTree(AvlTree tree) {
         this();
         TreeNode[] array = toArray(tree);
         for (int i = 0; i < array.length; i++) {
             TreeNode current = array[i];
-            if (current != null) { add(current.value); }
+            if (current != null) { super.add(current.value); }
         }
     }
 
