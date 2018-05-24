@@ -18,6 +18,11 @@ public class AvlTree extends Tree {
         }
     }
 
+    /**
+     * A method that calculates the maximum number of nodes in an AVL tree of height h
+     * @param h height of the tree (a non-negative number)
+     * @return maximum number of nodes in an AVL tree of height h
+     */
     public static int findMinNodes(int h) {
         return (int)((Math.pow(FIBONACCI, h + 3) - Math.pow(-FIBONACCI, -(h + 3))) / (2 * FIBONACCI - 1)) - 1;
     }
