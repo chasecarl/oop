@@ -61,13 +61,20 @@ public class Test {
             System.out.println(iterator2.hasNext());
         }
 
+        int[] someArray = { 1, 3, 0, -1, 2 };
+        Tree treeOnData = new Tree(someArray);
+        System.out.println(treeOnData);
+        Tree copyTree = new Tree(treeOnData);
+        System.out.println(copyTree);
+        System.out.println(copyTree.equals(treeOnData));
+
         //------------------------------ AVL ----------------------------------------
 
         String aLotOfBars = "--------------------------------------";
         System.out.println("\n" + aLotOfBars+ "AVL" + aLotOfBars + "\n");
 
-        int[] someArray = { 1, 3, 0, -1, 2 };
-        AvlTree avltree1 = new AvlTree(someArray);
+        int[] someArray1 = { 1, 2, 3 };
+        AvlTree avltree1 = new AvlTree(someArray1);
         System.out.println(avltree1);
 
         Iterator<Integer> avlIterator = avltree1.iterator();

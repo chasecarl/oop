@@ -32,6 +32,11 @@ We decided to use our class that represents tree's node to store a whole tree.
 We decided to put findMaxNodes in the base class because it is the same for BST as for AVL;
 therefore we had to slightly change the comment so that the description matches to the class.
 We decided to have boolean variables LEFT and RIGHT to alter methods' behaviour.
+Our add method (in the base class) calls addHelper method that traverses through the nodes of the tree,
+comparing node values with the given newValue, and using method go that in its turn again calls
+addHelper on an appropriate child. At the end addHelper returns a new node, and go method also increments
+height of all nodes on the recursion path if needed.
+In the AvlTree, we call an addHelper and the method correction on the new node that addHelper just returned.
 In the Tree class, an overloaded addHelper (that uses only one int value) can be called with either LEFT
 or RIGHT - it doesn't matter.
 
