@@ -55,7 +55,7 @@ public class AvlTree extends Tree {
         if (node.parent == null)  { root = left; }
         else if (node == node.parent.left) { node.parent.left = left; }
         else { node.parent.right = left; }
-        left.left = node;
+        left.right = node;
         node.parent = left;
         return node;
     }
