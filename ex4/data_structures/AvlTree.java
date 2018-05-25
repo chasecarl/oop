@@ -14,7 +14,7 @@ public class AvlTree extends Tree {
         if (node != null) {
             return node.height;
         } else {
-            return 0;
+            return -1;
         }
     }
 
@@ -25,6 +25,16 @@ public class AvlTree extends Tree {
      */
     public static int findMinNodes(int h) {
         return (int)((Math.pow(FIBONACCI, h + 3) - Math.pow(-FIBONACCI, -(h + 3))) / (2 * FIBONACCI - 1)) - 1;
+    }
+
+    public boolean add(int newValue) {
+        class AvlFunction extends Function {
+            public void doAll(TreeNode current, TreeNode next) {
+                adjustHeight(current, next);
+                correction(current);
+            }
+        }
+        return addHelper(newValue, new AvlFunction()) != null;
     }
 
     private void heightCorrection(TreeNode node){
@@ -76,7 +86,7 @@ public class AvlTree extends Tree {
 
     private TreeNode correction(TreeNode node) {
         if (node == null) return null;
-        heightCorrection(node);
+//        heightCorrection(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
                 node.right = rightRotation(node.right);
@@ -93,15 +103,15 @@ public class AvlTree extends Tree {
         return node;
     }
 
-    public boolean add(int newValue){
-        TreeNode current = addHelper(newValue);
-        if (current == null) { return false; }
-        do {
-            correction(current);
-            current = current.parent;
-        } while (current != null);
-        return true;
-    }
+//    public boolean add(int newValue){
+//        TreeNode current = addHelper(newValue);
+//        if (current == null) { return false; }
+//        do {
+//            correction(current);
+//            current = current.parent;
+//        } while (current != null);
+//        return true;
+//    }
 
     public boolean delete(int toDelete){
         TreeNode node = searching(this.root, toDelete);

@@ -73,24 +73,24 @@ public class Test {
         String aLotOfBars = "--------------------------------------";
         System.out.println("\n" + aLotOfBars+ "AVL" + aLotOfBars + "\n");
 
-        int[] someArray1 = { 1, 2, 3 };
+        int[] someArray1 = { 3, 2, 1};
         AvlTree avltree1 = new AvlTree(someArray1);
 
         System.out.println(avltree1);
 
-        Iterator<Integer> avlIterator = avltree1.iterator();
-
-        System.out.println(AvlTree.findMaxNodes(0));
-        System.out.println(AvlTree.findMaxNodes(5));
-        System.out.println(AvlTree.findMinNodes(0));
-        System.out.println(AvlTree.findMinNodes(1));
-        System.out.println(AvlTree.findMinNodes(3));
-        System.out.println(AvlTree.findMinNodes(4));
-        System.out.println(AvlTree.findMinNodes(5));
-        System.out.println(AvlTree.findMinNodes(10));
-
-        AvlTree avlTree1copy = new AvlTree(avltree1);
-        System.out.println(avlTree1copy);
+//        Iterator<Integer> avlIterator = avltree1.iterator();
+//
+//        System.out.println(AvlTree.findMaxNodes(0));
+//        System.out.println(AvlTree.findMaxNodes(5));
+//        System.out.println(AvlTree.findMinNodes(0));
+//        System.out.println(AvlTree.findMinNodes(1));
+//        System.out.println(AvlTree.findMinNodes(3));
+//        System.out.println(AvlTree.findMinNodes(4));
+//        System.out.println(AvlTree.findMinNodes(5));
+//        System.out.println(AvlTree.findMinNodes(10));
+//
+//        AvlTree avlTree1copy = new AvlTree(avltree1);
+//        System.out.println(avlTree1copy);
     }
 
     public static boolean addandprint(Tree tree, int newValue) {

@@ -106,8 +106,9 @@ public class Tree {
         return addHelper(newValue)!= null;
     }
 
-    TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue); }
+    TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue, new Function()); }
 
+    TreeNode addHelper(int newValue, Function func) { return addHelper(root, root, RIGHT, newValue, func); }
     /**
      * A recursive method that traverses tree given the new node value to find place for it
      * @param current the node which we're looking at the current recursion level
@@ -116,7 +117,7 @@ public class Tree {
      * @param newValue a value to add
      * @return a newly added TreeNode; null iff there already a node with the newValue
      */
-    TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue) {
+    TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue, Function func) {
         if (current == null) {
             if (parent == null) {
                 root = getNewTreeNode(newValue);
@@ -125,8 +126,8 @@ public class Tree {
             return getNewTreeNode(newValue, parent, right);
         }
         if (newValue == current.value) { return null; }
-        if (newValue < current.value) { return go(LEFT, newValue, current); }
-        else { return go(RIGHT, newValue, current); }
+        if (newValue < current.value) { return go(LEFT, newValue, current, func); }
+        else { return go(RIGHT, newValue, current, func); }
     }
 
     /**
@@ -136,13 +137,14 @@ public class Tree {
      * @param current the node which we're looking at the current recursion level
      * @return a newly added TreeNode; null iff there already a node with the newValue
      */
-    private TreeNode go(boolean right, int newValue, TreeNode current) {
+    private TreeNode go(boolean right, int newValue, TreeNode current, Function func) {
         TreeNode next = getChild(current, right);
-        TreeNode added = addHelper(next, current, right, newValue);
+        TreeNode added = addHelper(next, current, right, newValue, func);
         // we need to reassign here because there can be old null link (as next stored value before adding a new node)
         next = getChild(current, right);
         if (added != null) {
-            if (current.height <= next.height) { current.height++; }
+//            if (current.height <= next.height) { current.height++; }
+            func.doAll(current, next);
             return added;
         }
         return null;
@@ -405,7 +407,9 @@ public class Tree {
      * */
     public Tree(int[] data) {
         this();
-        for (int element : data) { this.add(element); }
+        for (int element : data) {
+            this.add(element);
+        }
     }
 
     /** A copy constructor that builds the tree from existing tree.
