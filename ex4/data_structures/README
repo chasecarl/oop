@@ -55,7 +55,7 @@ or if deleted element has one child  we should change it by it's child.
 We made an extra class Tree.java which implements the binary search tree.
 It has the sub class TreeNode implements tree node; methods: add, delete, iterator, contains, findMinNodes,
 findMaxNodes.
-AvlTree class is extends Tree class and use most of it's methods.
+AvlTree class extends Tree class and use most of its methods.
 
 5.1 Analyzing the AVL tree:
 9, 4, 25, 1, 16, 36, 49, 6, 5, 20, 15, 21
@@ -65,9 +65,10 @@ AvlTree class is extends Tree class and use most of it's methods.
 - Also O(nlog(n))
 
 5.3 The complexity of copying an AVL tree
-- The asymptotic running time complexity of the tree construction done in AvlTree(AvlTree avlTree) is O(nlog(n))
-- The best possible running time complexity for a specific case is O(2n)=O(n), where O(n) is traversing a tree
-to the array and O(n) is building tree in givven order.
+- The asymptotic running time complexity of the tree construction done in AvlTree(AvlTree avlTree) is O(n)
+- The best possible running time complexity for a specific case is O(n), where O(n) is traversing a tree
+through each node (n nodes in total), on each step creating a new node with the same value (O(1)),
+and adding appropriate pointers (O(1) too).
 
 5.4 The complexity of calculating the minimal number of nodes in an AVL tree of a given height
 - The asymptotic running time complexity of our implementation of the operation done
