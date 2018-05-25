@@ -40,14 +40,37 @@ In the AvlTree, we call an addHelper and the method correction on the new node t
 In the Tree class, an overloaded addHelper (that uses only one int value) can be called with either LEFT
 or RIGHT - it doesn't matter.
 
+Method delete:
+We made a recursive function, where we look at three cases: element is in the left sub tree of the current
+sub tree; element in the right sub tree; or element in the root. In the first two cases we recursively delete
+the element from specific sub tree. If element is in the root of current sub tree, we should change it by
+the minimal element from the right sub tree and recursively delete this minimal element from right sub tree;
+or if deleted element has one child  we should change it by it's child.
+
+
 
 =============================
 =    Answers to questions   =
 =============================
+We made an extra class Tree.java which implements the binary search tree.
+It has the sub class TreeNode implements tree node; methods: add, delete, iterator, contains, findMinNodes,
+findMaxNodes.
+AvlTree class extends Tree class and use most of its methods.
 
-1)
-The smart player picks his moves by simply looking at all the possible valid moves, and picking the
-one that leaves the opponent with the minimal number of possible steps (and which does not make him lose)
+5.1 Analyzing the AVL tree:
+9, 4, 25, 1, 16, 36, 49, 6, 5, 20, 15, 21
 
-2)
-On the given example, the run time of the TresSet took 0.3445 seconds, While the run time of the HashSet took 0.56547.
+5.2 The complexity of constructing an AVL tree:
+- The asymptotic running time complexity of the tree construction done in AvlTree(int[] data) is O(nlog(n)).
+- Also O(nlog(n))
+
+5.3 The complexity of copying an AVL tree
+- The asymptotic running time complexity of the tree construction done in AvlTree(AvlTree avlTree) is O(n)
+- The best possible running time complexity for a specific case is O(n), where O(n) is traversing a tree
+through each node (n nodes in total), on each step creating a new node with the same value (O(1)),
+and adding appropriate pointers (O(1) too).
+
+5.4 The complexity of calculating the minimal number of nodes in an AVL tree of a given height
+- The asymptotic running time complexity of our implementation of the operation done
+in findMinNodes(int h) is O(1).
+- O(1) is the best possible asymptotic running time complexity.
