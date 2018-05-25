@@ -57,6 +57,7 @@ public class AvlTree extends Tree {
         else { node.parent.right = left; }
         left.right = node;
         node.parent = left;
+
         return node;
     }
 
@@ -70,6 +71,7 @@ public class AvlTree extends Tree {
         else { node.parent.right = right; }
         right.left = node;
         node.parent = right;
+
         return node;
     }
 
@@ -83,15 +85,23 @@ public class AvlTree extends Tree {
 //        heightCorrection(node);
         if (balanceFactor(node) == 2){
             if (balanceFactor(node.right) < 0){
-                node.right = rightRotation(node.right);
+                rightRotation(node.right);
+                node.right.height++;
+                node.right.right.height--;
             }
-            return leftRotation(node);
+            TreeNode result = leftRotation(node);
+            result.height -= 2;
+            return result;
         } else {
             if (balanceFactor(node) == -2){
                 if (balanceFactor(node.left) > 0){
-                    node.left = leftRotation(node.left);
+                    leftRotation(node.left);
+                    node.left.height++;
+                    node.left.left.height--;
                 }
-                return rightRotation(node);
+                TreeNode result = rightRotation(node);
+                result.height -= 2;
+                return result;
             }
         }
         return node;
