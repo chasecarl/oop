@@ -5,7 +5,7 @@ public class Function {
         adjustHeight(current, next);
     }
 
-    protected void adjustHeight(Tree.TreeNode current, Tree.TreeNode next) {
+    private void adjustHeight(Tree.TreeNode current, Tree.TreeNode next) {
         if (current.height <= next.height) { current.height++; }
     }
 }

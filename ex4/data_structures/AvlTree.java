@@ -30,7 +30,7 @@ public class AvlTree extends Tree {
     public boolean add(int newValue) {
         class AvlFunction extends Function {
             public void doAll(TreeNode current, TreeNode next) {
-                adjustHeight(current, next);
+                super.doAll(current, next);
                 correction(current);
             }
         }
