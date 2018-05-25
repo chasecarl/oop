@@ -47,12 +47,6 @@ public class AvlTree extends Tree {
         }
     }
 
-    private void correctHeight(TreeNode node) {
-        if (node.left != null) { correctHeight(node.left); }
-        if (node.right != null) { correctHeight(node.right); }
-
-    }
-
     private TreeNode rightRotation(TreeNode node){
         TreeNode left = node.left;
         node.left = left.right;
