@@ -78,7 +78,8 @@ public class Tree {
      * @return the new node
      */
     private TreeNode getNewTreeNode(int newValue, int height, TreeNode[] array, int i) {
-        TreeNode newNode = getNewTreeNode(newValue, array[i / 2], i % 2 == 1);
+        int parentIndex = i == 1 ? 0 : i / 2 - 1;
+        TreeNode newNode = getNewTreeNode(newValue, array[parentIndex], i % 2 == 1);
         newNode.height = height;
         array[i - 1] = newNode;
         return newNode;
