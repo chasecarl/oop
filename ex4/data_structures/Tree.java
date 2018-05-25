@@ -70,6 +70,21 @@ public class Tree {
 
     private TreeNode getNewTreeNode(int newValue) { return getNewTreeNode(newValue, null, RIGHT); }
 
+    /** An array modification of the getNewTreeNode method
+     * @param newValue a value for a new node
+     * @param height a height of the new node
+     * @param array an array where the new node goes
+     * @param i the new node's index in the array
+     * @return the new node
+     */
+    private TreeNode getNewTreeNode(int newValue, int height, TreeNode[] array, int i) {
+        int parentIndex = i == 1 ? 0 : i / 2 - 1;
+        TreeNode newNode = getNewTreeNode(newValue, array[parentIndex], i % 2 == 1);
+        newNode.height = height;
+        array[i - 1] = newNode;
+        return newNode;
+    }
+
     //------------------------------------------------------------------------------------------------
     //------------------------------------- height methods -------------------------------------------
     //------------------------------------------------------------------------------------------------
@@ -353,11 +368,12 @@ public class Tree {
     /**
      * Creates an array of TreeNode that represents the given tree
      * @param tree a tree representation of which we want
+     * @param copy determines whether this method is in copy mode or not
      * @return an array of TreeNode representing the given tree
      */
-    TreeNode[] toArray(Tree tree) {
+    TreeNode[] toArray(Tree tree, boolean copy) {
         TreeNode[] result = new TreeNode[findMaxNodes(tree.height())];
-        traverseToArray(1, result, tree.root);
+        traverseToArray(1, result, tree.root, copy);
         return result;
     }
 
@@ -366,12 +382,14 @@ public class Tree {
      * @param i number of the current node in the array (starting from 1)
      * @param result the array in which we insert the nodes
      * @param current the node which we're looking at the current recursion level
+     * @param copy determines whether this method is in copy mode or not
      */
-    void traverseToArray(int i, TreeNode[] result, TreeNode current) {
+    void traverseToArray(int i, TreeNode[] result, TreeNode current, boolean copy) {
         if (current == null) { return; }
-        result[i - 1] = current;
-        traverseToArray(i * 2, result, current.left);
-        traverseToArray(i * 2 + 1, result, current.right);
+        if (copy) { getNewTreeNode(current.value, current.height, result, i); }
+        else { result[i - 1] = current; }
+        traverseToArray(i * 2, result, current.left, copy);
+        traverseToArray(i * 2 + 1, result, current.right, copy);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -390,6 +408,15 @@ public class Tree {
         for (int element : data) { this.add(element); }
     }
 
+    /** A copy constructor that builds the tree from existing tree.
+     * @param tree - tree to be copied
+     */
+    public Tree(Tree tree) {
+        this();
+        TreeNode[] array = toArray(tree, true);
+        if (array.length != 0 && array[0] != null) { root = array[0]; }
+    }
+
     //------------------------------------------------------------------------------------------------
     //-------------------------------------- Other (print)  ------------------------------------------
     //------------------------------------------------------------------------------------------------
@@ -398,7 +425,7 @@ public class Tree {
     public String toString() {
         if (root == null) return "";
 
-        TreeNode[] arrayTree = toArray(this);
+        TreeNode[] arrayTree = toArray(this, false);
         String result = "";
         int spaceNumber = height();
 

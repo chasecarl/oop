@@ -117,25 +117,18 @@ public class AvlTree extends Tree {
     }
 
     /** A default constructor. */
-    public AvlTree() { super();}
+    public AvlTree() { super(); }
 
     /** A constructor that builds the tree by adding the elements in the input array one-by-one
      *  If the same values appears twice (or more) in the list, it is ignored.
      * @param data - values to add to tree
      */
-    public AvlTree(int[] data) { super(data);}
+    public AvlTree(int[] data) { super(data); }
 
     /** A copy constructor that builds the tree from existing tree.
      * @param tree - tree to be copied
      */
-    public AvlTree(AvlTree tree) {
-        this();
-        TreeNode[] array = toArray(tree);
-        for (int i = 0; i < array.length; i++) {
-            TreeNode current = array[i];
-            if (current != null) { super.add(current.value); }
-        }
-    }
+    public AvlTree(AvlTree tree) { super(tree); }
 
 
 }
