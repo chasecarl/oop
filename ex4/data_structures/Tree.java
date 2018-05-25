@@ -257,8 +257,11 @@ public class Tree {
         }
     }
 
-    /*
-    Recursive helper for searching a value in the tree.
+    /**
+     * Recursive helper for searching a value in the tree.
+     * @param currentNode Current node
+     * @param searchVal Searching value
+     * @return The node which contains the searching value if such exists, otherwise null.
      */
     TreeNode searching (TreeNode currentNode, int searchVal){
         if (currentNode == null){
@@ -295,6 +298,12 @@ public class Tree {
         }
     }
 
+    /**
+     * Recursive helper for delete function, which finds node for deletion and removes it.
+     * @param toDelete Value to delete
+     * @param currentNode Current node
+     * @return Current node when searching node is still not deleted, null when it deleted.
+     */
     TreeNode deleteHelper(int toDelete, TreeNode currentNode) {
         if (currentNode == null) {
             return currentNode;
@@ -320,6 +329,11 @@ public class Tree {
         return currentNode;
     }
 
+    /**
+     * Corrects the height parameter in all nodes in current subtree.
+     * @param node Current node
+     * @return the height of the current node
+     */
     int heightCheck(TreeNode node) {
         if (node.right != null && node.left != null) {
             node.height = 1 + Math.max(heightCheck(node.right), heightCheck(node.left));
@@ -337,7 +351,10 @@ public class Tree {
         return node.height;
     }
 
-    // TODO: CHANGE THIS ONE WITH getMinTreeNode
+    /**
+     * @param root Current node
+     * @return the node with minimal value in current sub tree
+     */
     private TreeNode minNode(TreeNode root){
         if (root.left == null){
             return root;
