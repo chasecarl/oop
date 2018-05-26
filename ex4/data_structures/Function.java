@@ -1,5 +1,13 @@
 package oop.ex4.data_structures;
 
+/**
+ * This class (specifically, its method fix) is used in the go method of the Tree class
+ * when going back recursively after adding a new node in the addHelper method.
+ * It's good to have it since we can inherit from it another class (with its own implementation
+ * of the fix method) and do stuff while we are still deep in the tree instead of
+ * going up with go/addHelper recursion, then going down with some other fix method, and after that
+ * going up again.
+ */
 public class Function {
 
     /**

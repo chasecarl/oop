@@ -9,6 +9,7 @@ ilia.bezgin
 =============================
 Tree.java - an implementation of a binary search tree
 AvlTree.java - an implementation of an AVL tree
+Function.java - an implementation of a Function object with useful methods
 
 
 =============================
@@ -23,6 +24,12 @@ represents a node in BST and from the same reasoning it potentially has more pot
 comparing to something like AVL node. Even if they are the same, it's awkward to inherit a class for
 some other type of BST node from an AVL node.
 
+We also decided to write a Function object that has the main method called fix that is called during
+an addition of the new element (to both types of trees). It's role is 'to clean up the mess' after
+an addition, in other words, to increment height of the nodes in a branch of a tree that has grown after
+an addition (in both types of trees) and also to balance the tree, that is performing rotates
+(specifically in AVL tree).
+
 
 
 =============================
@@ -31,7 +38,10 @@ some other type of BST node from an AVL node.
 We decided to use our class that represents tree's node to store a whole tree.
 We decided to put findMaxNodes in the base class because it is the same for BST as for AVL;
 therefore we had to slightly change the comment so that the description matches to the class.
-We decided to have boolean variables LEFT and RIGHT to alter methods' behaviour.
+
+We decided to have boolean fields LEFT and RIGHT to alter methods' behaviour.
+The same thing about COPY and TRAVERSE, ONE_STEP_ROTATION and TWO_STEP_ROTATION.
+
 Our add method (in the base class) calls addHelper method that traverses through the nodes of the tree,
 comparing node values with the given newValue, and using method go that in its turn again calls
 addHelper on an appropriate child. At the end addHelper returns a new node, and go method also increments
@@ -47,6 +57,13 @@ the element from specific sub tree. If element is in the root of current sub tre
 the minimal element from the right sub tree and recursively delete this minimal element from right sub tree;
 or if deleted element has one child  we should change it by it's child.
 
+Function class/fix method:
+This method is used while adding a new element, as it stated before, its behaviour can be changed to also
+balance the nodes and not only to increment height. In order to do so, in the add method of the AvlTree
+we wrote a new class AvlFunction that extends Function, allowing programmer to add his/her methods
+(e.g., correction in the AvlTree) to the fix method that is executed at each backward recursion step.
+This implementation allows possible other types of tree to do their stuff right at the moment of the
+addition, and not after (that means that the same branch wouldn't be traversed twice without a need).
 
 
 =============================

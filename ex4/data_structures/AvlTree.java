@@ -1,5 +1,8 @@
 package oop.ex4.data_structures;
 
+/**
+ * This class is the complete and tested implementation of an AVL-tree.
+ */
 public class AvlTree extends Tree {
 
     /** Stores the Fibonacci ratio */
@@ -168,12 +171,12 @@ public class AvlTree extends Tree {
 
     /** A constructor that builds the tree by adding the elements in the input array one-by-one
      *  If the same values appears twice (or more) in the list, it is ignored.
-     * @param data - values to add to tree
+     * @param data values to add to tree
      */
     public AvlTree(int[] data) { super(data); }
 
     /** A copy constructor that builds the tree from existing tree.
-     * @param tree - tree to be copied
+     * @param tree tree to be copied
      */
     public AvlTree(AvlTree tree) { super(tree); }
 

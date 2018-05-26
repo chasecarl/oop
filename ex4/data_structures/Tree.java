@@ -3,6 +3,9 @@ package oop.ex4.data_structures;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * This class is the complete and tested implementation of a binary search tree.
+ */
 public class Tree {
 
     //------------------------------------------------------------------------------------------------
@@ -159,7 +162,7 @@ public class Tree {
      * @param newValue a value to add
      * @param func a Function object (you can write another class that extends Function, override
      *             the fix method and thus change the behaviour of this method)
-     * @return
+     * @return a newly added TreeNode; null iff there already a node with the newValue
      */
     TreeNode addHelper(int newValue, Function func) { return addHelper(root, root, RIGHT, newValue, func); }
 
@@ -270,8 +273,8 @@ public class Tree {
     /**
      * Goes up in the tree from the given node until it finds a node such that
      * the previous one is its left child (intuitively we go up-left in the tree until we finally go up-right)
-     * @param node
-     * @return
+     * @param node a node to start from
+     * @return "the first right turn" node
      */
     private TreeNode getFirstRightTurn(TreeNode node) {
         TreeNode parent = node.parent;
