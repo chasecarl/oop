@@ -13,6 +13,10 @@ public class Tree {
     static final boolean LEFT = false;
     /** Used in addHelper method to change its behavior to the right part of the tree */
     static final boolean RIGHT = true;
+    /** Used in toArray method to change its behavior to copy the tree */
+    private static boolean COPY = true;
+    /** Used in toArray method to change its behavior to traverse the tree without copying */
+    private static boolean TRAVERSE = false;
 
     /** The root node of a tree */
     TreeNode root;
@@ -37,20 +41,32 @@ public class Tree {
         /** The height of this node */
         int height;
 
-        /** Constructs a TreeNode given its integer value */
+        /**
+         * Constructs a TreeNode given its integer value
+         * @param value value of the new node
+         */
         private TreeNode(int value) {
             this.value = value;
             this.height = 0;
         }
 
-        /** Constructs a TreeNode given its integer value and its parent node */
+        /**
+         * Constructs a TreeNode given its integer value and its parent node
+         * @param value value of the new node
+         * @param parent parent node of the new node
+         */
         private TreeNode(int value, TreeNode parent) {
             this(value);
             this.parent = parent;
         }
 
-        /** Constructs a TreeNode given its integer value, its parent node,
-         * and a switch that represents whether the new node is a right or a left child */
+        /**
+         * Constructs a TreeNode given its integer value, its parent node,
+         * and a switch that represents whether the new node is a right or a left child
+         * @param value value of the new node
+         * @param parent parent node of the new node
+         * @param right a switch that represents whether the new node is a right or a left child
+         */
         private TreeNode(int value, TreeNode parent, boolean right) {
             this(value, parent);
             if (parent == null) return;
@@ -59,15 +75,27 @@ public class Tree {
         }
     }
 
-    /** Wraps creating a new node with incrementing size */
+    /**
+     * Wraps creating a new node with incrementing size
+     * @param newValue value of the new node
+     * @param parent parent node of the new node
+     * @param right a switch that represents whether the new node is a right or a left child
+     * @return the new node
+     */
     private TreeNode getNewTreeNode(int newValue, TreeNode parent, boolean right) {
         size++;
         return new TreeNode(newValue, parent, right);
     }
 
+    /**
+     * An overloaded version that takes only one argument and creates a node without parent
+     * @param newValue value of the new node
+     * @return the new node
+     */
     private TreeNode getNewTreeNode(int newValue) { return getNewTreeNode(newValue, null, RIGHT); }
 
-    /** An array modification of the getNewTreeNode method
+    /** An array modification of the getNewTreeNode method that creates a new node and puts it at
+     * specified place in the given array, assigning to it the given height (used in the copy constructor)
      * @param newValue a value for a new node
      * @param height a height of the new node
      * @param array an array where the new node goes
@@ -83,7 +111,7 @@ public class Tree {
     }
 
     //------------------------------------------------------------------------------------------------
-    //------------------------------------- height methods -------------------------------------------
+    //------------------------------------- height method -------------------------------------------
     //------------------------------------------------------------------------------------------------
 
     /** @return the height of the tree */
@@ -103,15 +131,14 @@ public class Tree {
         return addHelper(newValue)!= null;
     }
 
-    TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue, new Function()); }
-
-    TreeNode addHelper(int newValue, Function func) { return addHelper(root, root, RIGHT, newValue, func); }
     /**
-     * A recursive method that traverses tree given the new node value to find place for it
+     * A recursive method that traverses the tree given the new node value to find a place for it in the tree
+     * and add the corresponding new node on it
      * @param current the node which we're looking at the current recursion level
      * @param parent the node from which the current recursion was called
      * @param right a boolean value that indicates whether we go to the left or to the right child
      * @param newValue a value to add
+     * @param func a Function object whose method is used when going back from recursion
      * @return a newly added TreeNode; null iff there already a node with the newValue
      */
     TreeNode addHelper(TreeNode current, TreeNode parent, boolean right, int newValue, Function func) {
@@ -128,10 +155,27 @@ public class Tree {
     }
 
     /**
+     * An overloaded version that takes only two arguments; can be called with a different Function object
+     * @param newValue a value to add
+     * @param func a Function object (you can write another class that extends Function, override
+     *             the fix method and thus change the behaviour of this method)
+     * @return
+     */
+    TreeNode addHelper(int newValue, Function func) { return addHelper(root, root, RIGHT, newValue, func); }
+
+    /**
+     * An overloaded version that takes only one argument from which recursion starts
+     * @param newValue a value to add
+     * @return a newly added TreeNode; null iff there already a node with the newValue
+     */
+    TreeNode addHelper(int newValue) { return addHelper(root, root, RIGHT, newValue, new Function()); }
+
+    /**
      * Takes an appropriate child and calls addHelper on him and then updates height when needed
      * @param right a boolean value that indicates whether we go to the left or to the right child
      * @param newValue a value to add
      * @param current the node which we're looking at the current recursion level
+     * @param func a Function object whose fix method is called
      * @return a newly added TreeNode; null iff there already a node with the newValue
      */
     private TreeNode go(boolean right, int newValue, TreeNode current, Function func) {
@@ -140,7 +184,6 @@ public class Tree {
         // we need to reassign here because there can be old null link (as child stored value before adding a new node)
         child = getChild(current, right);
         if (added != null) {
-//            if (current.height <= child.height) { current.height++; }
             func.fix(current, child);
             return added;
         }
@@ -175,8 +218,9 @@ public class Tree {
      * Returns an iterator for the Tree. The returned iterator iterates
      * over the tree nodes in an ascending order, and does NOT implement the remove() method.
      * @return an iterator for the Tree.
+     * @throws NoSuchElementException iff next is called while there is no element left to iterate over
      */
-    public java.util.Iterator<Integer> iterator() {
+    public java.util.Iterator<Integer> iterator() throws NoSuchElementException {
         class TreeIterator implements Iterator<Integer> {
 
             private TreeNode current;
@@ -223,6 +267,12 @@ public class Tree {
         else return getMinTreeNode(node.right);
     }
 
+    /**
+     * Goes up in the tree from the given node until it finds a node such that
+     * the previous one is its left child (intuitively we go up-left in the tree until we finally go up-right)
+     * @param node
+     * @return
+     */
     private TreeNode getFirstRightTurn(TreeNode node) {
         TreeNode parent = node.parent;
         while (parent != null && parent.value < node.value) {
@@ -312,7 +362,7 @@ public class Tree {
                 currentNode.right = deleteHelper(toDelete, currentNode.right);
             } else {
                 if (currentNode.right != null && currentNode.left != null) {
-                    currentNode.value = minNode(currentNode.right).value;
+                    currentNode.value = getMinTreeNode(currentNode.right).value;
                     currentNode.right = deleteHelper(currentNode.value, currentNode.right);
                 } else {
                     if (currentNode.left != null) {
@@ -348,18 +398,6 @@ public class Tree {
         return node.height;
     }
 
-    /**
-     * @param root Current node
-     * @return the node with minimal value in current sub tree
-     */
-    private TreeNode minNode(TreeNode root){
-        if (root.left == null){
-            return root;
-        } else {
-            return minNode(root.left);
-        }
-    }
-
     //------------------------------------------------------------------------------------------------
     //--------------------------------------- findMaxNodes -------------------------------------------
     //------------------------------------------------------------------------------------------------
@@ -384,7 +422,8 @@ public class Tree {
     /**
      * Creates an array of TreeNode that represents the given tree
      * @param tree a tree representation of which we want
-     * @param copy determines whether this method is in copy mode or not
+     * @param copy determines whether this method is in copy mode or not; it doesn't need to be because
+     *             you may want just to print all elements (therefore you don't need to copy but just to traverse)
      * @return an array of TreeNode representing the given tree
      */
     TreeNode[] toArray(Tree tree, boolean copy) {
@@ -431,7 +470,7 @@ public class Tree {
      */
     public Tree(Tree tree) {
         this();
-        TreeNode[] array = toArray(tree, true);
+        TreeNode[] array = toArray(tree, COPY);
         if (array.length != 0 && array[0] != null) { root = array[0]; }
     }
 
@@ -440,45 +479,45 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
     // TODO: THESE METHODS AREN'T REQUIRED AND NEED TO BE CUT OFF AT THE END
 
-    public String toString() {
-        if (root == null) return "";
-
-        TreeNode[] arrayTree = toArray(this, false);
-        String result = "";
-        int spaceNumber = height();
-
-        String currentHeightString = "";
-        String currentSpaces = "";
-        for (int i = 0; i < arrayTree.length; i++) {
-            if (isPowerOfTwo(i + 1)) {
-                if (spaceNumber != height()) {
-                    currentHeightString += currentSpaces + "\n";
-                    result += currentHeightString;
-                }
-                currentSpaces = getNumberOfSpaces(spaceNumber);
-                spaceNumber--;
-                currentHeightString = currentSpaces;
-            }
-            String element;
-            if (arrayTree[i] == null) { element = " "; }
-            else { element = Integer.toString(arrayTree[i].value); }
-            currentHeightString += element + " ";
-        }
-        result += currentHeightString.substring(0, currentHeightString.length() - 1);
-        result += "\nsize: " + size();
-
-        return result;
-    }
-
-    private String getNumberOfSpaces(int number) {
-        String result = "";
-        for (int i = 0; i < number; i++) { result += " "; }
-        return result;
-    }
-
-    private boolean isPowerOfTwo(int i) {
-        if (i == 1) return true;
-        if (i % 2 == 0) return isPowerOfTwo(i / 2);
-        return false;
-    }
+//    public String toString() {
+//        if (root == null) return "";
+//
+//        TreeNode[] arrayTree = toArray(this, false);
+//        String result = "";
+//        int spaceNumber = height();
+//
+//        String currentHeightString = "";
+//        String currentSpaces = "";
+//        for (int i = 0; i < arrayTree.length; i++) {
+//            if (isPowerOfTwo(i + 1)) {
+//                if (spaceNumber != height()) {
+//                    currentHeightString += currentSpaces + "\n";
+//                    result += currentHeightString;
+//                }
+//                currentSpaces = getNumberOfSpaces(spaceNumber);
+//                spaceNumber--;
+//                currentHeightString = currentSpaces;
+//            }
+//            String element;
+//            if (arrayTree[i] == null) { element = " "; }
+//            else { element = Integer.toString(arrayTree[i].value); }
+//            currentHeightString += element + " ";
+//        }
+//        result += currentHeightString.substring(0, currentHeightString.length() - 1);
+//        result += "\nsize: " + size();
+//
+//        return result;
+//    }
+//
+//    private String getNumberOfSpaces(int number) {
+//        String result = "";
+//        for (int i = 0; i < number; i++) { result += " "; }
+//        return result;
+//    }
+//
+//    private boolean isPowerOfTwo(int i) {
+//        if (i == 1) return true;
+//        if (i % 2 == 0) return isPowerOfTwo(i / 2);
+//        return false;
+//    }
 }

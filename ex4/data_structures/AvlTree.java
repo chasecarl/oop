@@ -8,6 +8,7 @@ public class AvlTree extends Tree {
     private static final boolean ONE_STEP_ROTATION = true;
     /** Used in fixHeight method to change its behavior to match the case when there are two rotations */
     private static final boolean TWO_STEP_ROTATION = false;
+
     /**
      * @param node the node that we want to know its height
      * @return the height of the node if it isn't null, -1 otherwise
@@ -137,7 +138,7 @@ public class AvlTree extends Tree {
 
     /**
      * An overloaded version that is called in case of one step rotation;
-     * here we also don't need to specify the right parameter
+     * here we also don't need to specify the right parameter as we don't need it in this case
      * @param node a node to fix
      * @return the fixed node
      */
