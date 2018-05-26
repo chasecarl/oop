@@ -10,9 +10,9 @@ public class Tree {
     //------------------------------------------------------------------------------------------------
 
     /** Used in addHelper method to change its behavior to the left part of the tree */
-    private static final boolean LEFT = false;
+    static final boolean LEFT = false;
     /** Used in addHelper method to change its behavior to the right part of the tree */
-    private static final boolean RIGHT = true;
+    static final boolean RIGHT = true;
 
     /** The root node of a tree */
     TreeNode root;
@@ -42,9 +42,6 @@ public class Tree {
             this.value = value;
             this.height = 0;
         }
-
-        /** Constructs a TreeNode with the default value of 0 */
-        private TreeNode() { this(0); }
 
         /** Constructs a TreeNode given its integer value and its parent node */
         private TreeNode(int value, TreeNode parent) {
@@ -138,13 +135,13 @@ public class Tree {
      * @return a newly added TreeNode; null iff there already a node with the newValue
      */
     private TreeNode go(boolean right, int newValue, TreeNode current, Function func) {
-        TreeNode next = getChild(current, right);
-        TreeNode added = addHelper(next, current, right, newValue, func);
-        // we need to reassign here because there can be old null link (as next stored value before adding a new node)
-        next = getChild(current, right);
+        TreeNode child = getChild(current, right);
+        TreeNode added = addHelper(child, current, right, newValue, func);
+        // we need to reassign here because there can be old null link (as child stored value before adding a new node)
+        child = getChild(current, right);
         if (added != null) {
-//            if (current.height <= next.height) { current.height++; }
-            func.doAll(current, next);
+//            if (current.height <= child.height) { current.height++; }
+            func.fix(current, child);
             return added;
         }
         return null;

@@ -2,19 +2,19 @@ package oop.ex4.data_structures;
 
 public class AvlTree extends Tree {
 
-    /** Stores a Fibonacci number */
+    /** Stores the Fibonacci ratio */
     private static final double FIBONACCI = 0.5 * (1 + Math.sqrt(5));
-
+    /** Used in fixHeight method to change its behavior to match the case when there is only one rotation */
+    private static final boolean ONE_STEP_ROTATION = true;
+    /** Used in fixHeight method to change its behavior to match the case when there are two rotations */
+    private static final boolean TWO_STEP_ROTATION = false;
     /**
-     * @param node a no
-     * @return the height of the node
+     * @param node the node that we want to know its height
+     * @return the height of the node if it isn't null, -1 otherwise
      */
     private int getHeight(TreeNode node) {
-        if (node != null) {
-            return node.height;
-        } else {
-            return -1;
-        }
+        if (node != null) { return node.height; }
+        return -1;
     }
 
     /**
@@ -33,26 +33,12 @@ public class AvlTree extends Tree {
      */
     public boolean add(int newValue) {
         class AvlFunction extends Function {
-            public void doAll(TreeNode current, TreeNode next) {
-                super.doAll(current, next);
+            public void fix(TreeNode current, TreeNode next) {
+                super.fix(current, next);
                 correction(current);
             }
         }
         return addHelper(newValue, new AvlFunction()) != null;
-    }
-
-    /**
-     * Correct the height of the node during balancing the tree.
-     * @param node current node
-     */
-    private void heightCorrection(TreeNode node){
-        int leftHeight = getHeight(node.left);
-        int rightHeight = getHeight(node.right);
-        if (leftHeight > rightHeight){
-            node.height = leftHeight + 1;
-        } else {
-            node.height = rightHeight + 1;
-        }
     }
 
     /**
@@ -102,46 +88,62 @@ public class AvlTree extends Tree {
     }
 
     /**
-     * Balance the tree after deletion of addition of the element.
-     * @param node
-     * @return
+     * Balance the tree after deletion or addition of the element.
+     * @param node a node to balance
+     * @return the same node
      */
     private TreeNode correction(TreeNode node) {
         if (node == null) return null;
-//        heightCorrection(node);
-        if (balanceFactor(node) == 2){
+        int balanceFactor = balanceFactor(node);
+        if (balanceFactor == 2){
             if (balanceFactor(node.right) < 0){
                 rightRotation(node.right);
-                node.right.height++;
-                node.right.right.height--;
+                fixHeight(node, RIGHT, TWO_STEP_ROTATION);
             }
-            TreeNode result = leftRotation(node);
-            result.height -= 2;
-            return result;
-        } else {
-            if (balanceFactor(node) == -2){
-                if (balanceFactor(node.left) > 0){
-                    leftRotation(node.left);
-                    node.left.height++;
-                    node.left.left.height--;
-                }
-                TreeNode result = rightRotation(node);
-                result.height -= 2;
-                return result;
+            return fixHeight(leftRotation(node));
+        }
+        else if (balanceFactor == -2) {
+            if (balanceFactor(node.left) > 0){
+                leftRotation(node.left);
+                fixHeight(node, LEFT, TWO_STEP_ROTATION);
             }
+            return fixHeight(rightRotation(node));
         }
         return node;
     }
 
-//    public boolean add(int newValue){
-//        TreeNode current = addHelper(newValue);
-//        if (current == null) { return false; }
-//        do {
-//            correction(current);
-//            current = current.parent;
-//        } while (current != null);
-//        return true;
-//    }
+    /**
+     * Fixes height of the given node (or its children in case of two step rotation) after rotation
+     * @param node a node to fix
+     * @param right in the case of two step rotation defines whether we need to fix right or left children
+     * @param oneStepRotation defines the kind of a rotation (two or one step)
+     * @return the fixed node
+     */
+    private TreeNode fixHeight(TreeNode node, boolean right, boolean oneStepRotation) {
+        if (oneStepRotation) {
+            node.height -= 2;
+            return node;
+        }
+        if (right) {
+            node.right.height++;
+            node.right.right.height--;
+        }
+        else {
+            node.left.height++;
+            node.left.left.height--;
+        }
+        return node;
+    }
+
+    /**
+     * An overloaded version that is called in case of one step rotation;
+     * here we also don't need to specify the right parameter
+     * @param node a node to fix
+     * @return the fixed node
+     */
+    private TreeNode fixHeight(TreeNode node) {
+        return fixHeight(node, RIGHT, ONE_STEP_ROTATION);
+    }
 
     /**
      * Remove a node from the tree, if it exists.
@@ -150,15 +152,14 @@ public class AvlTree extends Tree {
      */
     public boolean delete(int toDelete){
         TreeNode node = searching(this.root, toDelete);
-        if (node != null){
+        if (node != null) {
             deleteHelper(toDelete, node);
             correction(deleteHelper(toDelete, root));
             heightCheck(root);
             size--;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /** A default constructor. */
@@ -174,6 +175,5 @@ public class AvlTree extends Tree {
      * @param tree - tree to be copied
      */
     public AvlTree(AvlTree tree) { super(tree); }
-
 
 }
